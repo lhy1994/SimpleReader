@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">SimpleReader</string>
+    <string name="title_movie">Movie</string>
+    <string name="title_book">Book</string>
+    <string name="title_music">Music</string>
+    <string name="title_me">Me</string>
+    <string-array name="douban_movie_ranks_title">
+        <item>正在热映</item>
+        <item>即将上映</item>
+        <item>Top250</item>
+        <item>口碑榜</item>
+        <item>北美票房榜</item>
+        <item>新片榜</item>
+    </string-array>
+</resources>

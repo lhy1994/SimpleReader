@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
+import com.example.liuhaoyuan.simplereader.api.DouBanApiService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class MovieFragment extends Fragment {
     }
 
     private void setupViewPager() {
-        mRankTitles = getResources().getStringArray(R.array.douban_movie_ranks_title);
+        mRankTitles = DouBanApiService.DOUBAN_RANK_TITLE;
         List<MovieListFragment> fragments = new ArrayList<>();
         for (String mRankTitle : mRankTitles) {
             MovieListFragment fragment = new MovieListFragment();

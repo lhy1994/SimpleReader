@@ -6,7 +6,7 @@ import java.util.List;
  * Created by liuhaoyuan on 17/4/23.
  */
 
-public class MovieItemBean {
+public class MovieListBean {
 
     /**
      * count : 20

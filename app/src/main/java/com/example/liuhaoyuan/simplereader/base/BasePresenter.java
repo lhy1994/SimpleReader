@@ -25,5 +25,4 @@ public abstract class BasePresenter<V extends BaseView,M extends BaseModel> {
         }
     }
 
-    public abstract void start();
 }

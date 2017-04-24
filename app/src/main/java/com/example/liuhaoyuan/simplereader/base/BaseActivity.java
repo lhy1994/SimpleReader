@@ -8,14 +8,14 @@ import android.support.v7.app.AppCompatActivity;
  * Created by liuhaoyuan on 17/4/23.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
-    protected BasePresenter mPresenter;
+public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
+    protected P mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (mPresenter!=null){
-            mPresenter=onCreatePrestener();
+            mPresenter= onCreatePresenter();
         }
     }
 
@@ -27,5 +27,5 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public abstract BasePresenter onCreatePrestener();
+    public abstract P onCreatePresenter();
 }

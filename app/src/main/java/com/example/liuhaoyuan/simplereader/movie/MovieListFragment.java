@@ -1,6 +1,5 @@
 package com.example.liuhaoyuan.simplereader.movie;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,27 +7,33 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
 import com.example.liuhaoyuan.simplereader.base.BaseFragment;
 import com.example.liuhaoyuan.simplereader.bean.MovieListBean;
+import com.example.liuhaoyuan.simplereader.movie.adapter.MovieAdapter;
 import com.example.liuhaoyuan.simplereader.util.DataUtils;
-import com.example.liuhaoyuan.simplereader.util.ViewUtils;
-
-import java.util.List;
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 /**
  * Created by liuhaoyuan on 17/4/23.
  */
 
-public class MovieListFragment extends BaseFragment<MovieListContract.Presenter> implements MovieListContract.View {
+public class MovieListFragment extends BaseFragment<MovieListContract.Presenter> implements MovieListContract.View, XRecyclerView.LoadingListener, View.OnClickListener {
 
-    private RecyclerView mMovieListView;
+    private XRecyclerView mMovieListView;
+    private int mCurrentCount = 0;
+    private String mRankTitle;
+    private MovieAdapter mAdapter;
+    private ProgressBar mLoadingView;
+    private FrameLayout mErrorView;
+    private int mTotal;
 
     @Override
     protected MovieListContract.Presenter onCreatePresenter() {
@@ -39,116 +44,108 @@ public class MovieListFragment extends BaseFragment<MovieListContract.Presenter>
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
         View view = View.inflate(getContext(), R.layout.fragment_moive_list, null);
-        mMovieListView = (RecyclerView) view.findViewById(R.id.lv_movie);
+        mMovieListView = (XRecyclerView) view.findViewById(R.id.lv_movie);
+        mMovieListView.setLoadingMoreEnabled(true);
+        mMovieListView.setRefreshProgressStyle(ProgressStyle.SysProgress);
+        mMovieListView.setLoadingMoreProgressStyle(ProgressStyle.BallScaleRipple);
+        mMovieListView.setLoadingListener(this);
+        mLoadingView = (ProgressBar) view.findViewById(R.id.loading_view);
+        mErrorView = (FrameLayout) view.findViewById(R.id.error_view);
+        Button mRetryBtn = (Button) view.findViewById(R.id.btn_retry);
+        mRetryBtn.setOnClickListener(this);
+
+        mRankTitle = getArguments().getString(ConstantValues.DOUBAN_MOVIE_RANK_TITLE);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        String rankTitle = getArguments().getString(ConstantValues.DOUBAN_RANK_TITLE);
-        mPresenter.getMovieList(rankTitle);
+        showLoadingView();
+        mPresenter.getMovieList(mRankTitle, "0", "20", false);
     }
 
     @Override
     public void updateList(MovieListBean bean) {
+        hideLoadingView();
+        hideErrorView();
+        mMovieListView.setVisibility(View.VISIBLE);
+        mTotal = bean.total;
+        mCurrentCount += bean.count;
         if (!DataUtils.isEmptyList(bean.subjects)) {
-            MovieAdapter adapter = new MovieAdapter(bean.subjects);
-            RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL, false);
-            mMovieListView.setLayoutManager(layoutManager);
-            mMovieListView.setAdapter(adapter);
-        }else {
-            System.out.println("error");
+            if (mAdapter == null) {
+                mAdapter = new MovieAdapter(bean.subjects, getContext());
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                mMovieListView.setLayoutManager(layoutManager);
+                mMovieListView.setAdapter(mAdapter);
+            } else {
+                mAdapter.setData(bean.subjects);
+                mMovieListView.refreshComplete();
+            }
         }
     }
 
-    private class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
-        private List<MovieListBean.SubjectsBean> data;
-
-        private MovieAdapter(List<MovieListBean.SubjectsBean> data) {
-            this.data = data;
+    @Override
+    public void addMoreData(MovieListBean bean) {
+        if (bean == null) {
+            mMovieListView.loadMoreComplete();
+            Toast.makeText(getContext(), "加载失败，请重试", Toast.LENGTH_LONG).show();
+            return;
         }
-
-        @Override
-        public MovieHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie_list, parent, false);
-            return new MovieHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(MovieHolder holder, int position) {
-            MovieListBean.SubjectsBean subject = data.get(position);
-            Glide.with(getActivity()).load(subject.images.medium).into(holder.mPosterIv);
-            holder.mTitleTv.setText(subject.title);
-            holder.mYearTv.setText(subject.year);
-            holder.mRatingTv.setText(subject.rating.average + "");
-            holder.mGenre.removeAllViews();
-            for (String s : subject.genres) {
-                TextView textView = new TextView(getContext());
-                textView.setText(s);
-                textView.setBackgroundResource(R.drawable.bg_genre);
-                textView.setTextColor(Color.WHITE);
-                textView.setPadding(ViewUtils.dpTopx(getContext(), 8),
-                        ViewUtils.dpTopx(getContext(), 2),
-                        ViewUtils.dpTopx(getContext(), 8),
-                        ViewUtils.dpTopx(getContext(), 2));
-                textView.setTextSize(ViewUtils.dpTopx(getContext(), 12));
-                holder.mGenre.addView(textView);
-            }
-            holder.mOriginNameTv.setText(subject.original_title);
-            if (subject.directors != null && subject.directors.size() > 0) {
-                StringBuilder directorsString = new StringBuilder("导演：");
-                for (MovieListBean.DirectorsBean director : subject.directors) {
-                    directorsString.append(director + " ");
-                }
-                holder.mDirectorsTV.setText(directorsString.toString());
-                holder.mDirectorsTV.setVisibility(View.VISIBLE);
-            } else {
-                holder.mDirectorsTV.setVisibility(View.GONE);
-            }
-            if (subject.casts != null && subject.casts.size() > 0) {
-                StringBuilder actorsString = new StringBuilder("主演：");
-                for (MovieListBean.CastsBean cast : subject.casts) {
-                    actorsString.append(cast + " ");
-                }
-                holder.mActorsTv.setText(actorsString);
-                holder.mActorsTv.setVisibility(View.VISIBLE);
-            } else {
-                holder.mActorsTv.setVisibility(View.GONE);
-            }
-            holder.mCollectCountTv.setText(subject.collect_count + "");
-        }
-
-        @Override
-        public int getItemCount() {
-            return data.size();
+        mCurrentCount += bean.count;
+        if (!DataUtils.isEmptyList(bean.subjects)) {
+            mAdapter.addMoreData(bean.subjects);
+            mMovieListView.loadMoreComplete();
         }
     }
 
-    private class MovieHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void showLoadingView() {
+        mLoadingView.setVisibility(View.VISIBLE);
+        mErrorView.setVisibility(View.GONE);
+        mMovieListView.setVisibility(View.GONE);
+    }
 
-        private final ImageView mPosterIv;
-        private final TextView mTitleTv;
-        private final TextView mYearTv;
-        private final TextView mRatingTv;
-        private final LinearLayout mGenre;
-        private final TextView mOriginNameTv;
-        private final TextView mDirectorsTV;
-        private final TextView mActorsTv;
-        private final TextView mCollectCountTv;
+    @Override
+    public void showErrorView() {
+        mErrorView.setVisibility(View.VISIBLE);
+        mLoadingView.setVisibility(View.GONE);
+        mMovieListView.setVisibility(View.GONE);
+    }
 
-        public MovieHolder(View itemView) {
-            super(itemView);
-            mPosterIv = (ImageView) itemView.findViewById(R.id.iv_poster);
-            mTitleTv = (TextView) itemView.findViewById(R.id.tv_movie_title);
-            mYearTv = (TextView) itemView.findViewById(R.id.tv_year);
-            mRatingTv = (TextView) itemView.findViewById(R.id.tv_rating);
-            mGenre = (LinearLayout) itemView.findViewById(R.id.genre);
-            mOriginNameTv = (TextView) itemView.findViewById(R.id.tv_origin_name);
-            mDirectorsTV = (TextView) itemView.findViewById(R.id.tv_director);
-            mActorsTv = (TextView) itemView.findViewById(R.id.tv_actor);
-            mCollectCountTv = (TextView) itemView.findViewById(R.id.tv_collect_count);
+    @Override
+    public void hideLoadingView() {
+        mLoadingView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideErrorView() {
+        mErrorView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onRefresh() {
+        mCurrentCount = 0;
+        mPresenter.getMovieList(mRankTitle, "0", "20", false);
+    }
+
+    @Override
+    public void onLoadMore() {
+        if (mCurrentCount < mTotal) {
+            mPresenter.getMovieList(mRankTitle, String.valueOf(mCurrentCount), "20", true);
+        } else {
+            mMovieListView.loadMoreComplete();
+            Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btn_retry) {
+            showLoadingView();
+            mPresenter.getMovieList(mRankTitle, "0", "20", false);
         }
     }
 }

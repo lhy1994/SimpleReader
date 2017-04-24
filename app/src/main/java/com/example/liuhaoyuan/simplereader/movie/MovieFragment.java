@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,23 +20,31 @@ import com.example.liuhaoyuan.simplereader.api.DouBanApiService;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindArray;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by liuhaoyuan on 17/4/23.
  */
 
 public class MovieFragment extends Fragment {
 
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
-    private String[] mRankTitles;
+    @BindView(R.id.tabs_movie)
+    TabLayout mTabLayout;
+    @BindView(R.id.vp_movie)
+    ViewPager mViewPager;
+    @BindArray(R.array.douban_movie_ranks_title)
+    String[] mRankTitles;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = View.inflate(getContext(), R.layout.fragment_movie, null);
-        mTabLayout = (TabLayout) view.findViewById(R.id.tabs_movie);
-        mViewPager = (ViewPager) view.findViewById(R.id.vp_movie);
+        ButterKnife.bind(this,view);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         return view;
     }
 
@@ -45,12 +55,11 @@ public class MovieFragment extends Fragment {
     }
 
     private void setupViewPager() {
-        mRankTitles = DouBanApiService.DOUBAN_RANK_TITLE;
         List<MovieListFragment> fragments = new ArrayList<>();
         for (String mRankTitle : mRankTitles) {
             MovieListFragment fragment = new MovieListFragment();
             Bundle bundle = new Bundle();
-            bundle.putString(ConstantValues.DOUBAN_RANK_TITLE, mRankTitle);
+            bundle.putString(ConstantValues.DOUBAN_MOVIE_RANK_TITLE, mRankTitle);
             fragment.setArguments(bundle);
             fragments.add(fragment);
         }

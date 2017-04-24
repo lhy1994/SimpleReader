@@ -14,15 +14,20 @@ import io.reactivex.Observable;
  */
 
 public interface MovieListContract {
-    public interface View extends BaseView{
+    public interface View extends BaseView {
         void updateList(MovieListBean bean);
+        void addMoreData(MovieListBean bean);
+        void showLoadingView();
+        void showErrorView();
+        void hideLoadingView();
+        void hideErrorView();
     }
 
-    public interface Model extends BaseModel{
-        Observable<MovieListBean> getMovieList(String rankTitle);
+    public interface Model extends BaseModel {
+        Observable<MovieListBean> getMovieList(String rankTitle, String start, String count);
     }
 
-    public abstract class Presenter extends BasePresenter<View,Model>{
-        public abstract void getMovieList(String rankTitle);
+    public abstract class Presenter extends BasePresenter<View, Model> {
+        public abstract void getMovieList(String rankTitle, String start, String count,boolean loadMore);
     }
 }

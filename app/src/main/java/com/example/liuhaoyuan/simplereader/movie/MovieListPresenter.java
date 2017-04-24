@@ -20,19 +20,28 @@ public class MovieListPresenter extends MovieListContract.Presenter {
     }
 
     @Override
-    public void getMovieList(String rankTitle) {
-        Disposable disposable = mModel.getMovieList(rankTitle)
-                .observeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
+    public void getMovieList(String rankTitle, String start, String count, final boolean loadMore) {
+        Disposable disposable = mModel.getMovieList(rankTitle, start, count)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<MovieListBean>() {
                     @Override
                     public void accept(@NonNull MovieListBean bean) throws Exception {
-                        mView.updateList(bean);
+                        if (loadMore){
+                            mView.addMoreData(bean);
+                        }else {
+                            mView.updateList(bean);
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
                         throwable.printStackTrace();
+                        if (!loadMore){
+                            mView.showErrorView();
+                        }else {
+                            mView.addMoreData(null);
+                        }
                     }
                 });
         addDisposable(disposable);

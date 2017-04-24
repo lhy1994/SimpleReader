@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.liuhaoyuan.simplereader.movie.MovieDetailActivity">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_header"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@color/colorAccent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="130dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp">
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/card_poster"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        app:cardCornerRadius="2dp"
+                        app:cardElevation="8dp"
+                        app:cardMaxElevation="10dp">
+
+                        <ImageView
+                            android:id="@+id/iv_poster"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorPrimary" />
+                    </android.support.v7.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        style="@style/TextAppearance.AppCompat.Title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="70dp"
+                        android:layout_toRightOf="@id/card_poster"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="Title"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@id/tv_title"
+                        android:layout_below="@id/tv_title"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginTop="5dp"
+                        android:text="8.0"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="20sp" />
+
+                    <RatingBar
+                        android:id="@+id/rating_bar"
+                        style="@style/Widget.AppCompat.RatingBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:layout_alignTop="@id/tv_rating"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_toRightOf="@id/tv_rating"
+                        android:max="5"
+                        android:rating="4" />
+
+                    <TextView
+                        android:id="@+id/tv_country"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@id/tv_rating"
+                        android:layout_below="@id/tv_rating"
+                        android:layout_marginTop="3dp"
+                        android:paddingRight="10dp"
+                        android:text="美国"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/tv_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@id/rating_bar"
+                        android:layout_below="@id/tv_rating"
+                        android:layout_marginTop="3dp"
+                        android:layout_toRightOf="@id/tv_country"
+                        android:text="2016"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
+
+                    <LinearLayout
+                        android:id="@+id/genre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@id/tv_rating"
+                        android:layout_below="@id/tv_country"
+                        android:layout_marginTop="8dp"
+                        android:paddingBottom="2dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="2dp" />
+                </RelativeLayout>
+
+                <TextView
+                    style="@style/SubTitle"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="15dp"
+                    android:text="Summary" />
+
+                <TextView
+                    android:id="@+id/tv_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_photos"
+                    style="@style/SubTitle"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="Photos" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/lv_movie_photos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    style="@style/SubTitle"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="Directors" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/lv_movie_directors"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    style="@style/SubTitle"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="Casts" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/lv_movie_casts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+</FrameLayout>

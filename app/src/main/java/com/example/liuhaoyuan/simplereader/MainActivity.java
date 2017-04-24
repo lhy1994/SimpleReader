@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         Fragment fragment = FragmentFactory.getFragment(R.id.navigation_movie);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+        setTitle(getString(R.string.title_movie));
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener

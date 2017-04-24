@@ -23,9 +23,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (mPresenter!=null){
-            mPresenter.start();
-        }
     }
 
     @Override

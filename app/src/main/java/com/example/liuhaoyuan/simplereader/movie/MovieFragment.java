@@ -32,7 +32,7 @@ public class MovieFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = View.inflate(getContext(), R.layout.fragment_movie, container);
+        View view = View.inflate(getContext(), R.layout.fragment_movie, null);
         mTabLayout = (TabLayout) view.findViewById(R.id.tabs_movie);
         mViewPager = (ViewPager) view.findViewById(R.id.vp_movie);
         return view;

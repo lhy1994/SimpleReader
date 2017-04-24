@@ -13,25 +13,26 @@ import com.example.liuhaoyuan.simplereader.music.MusicFragment;
  */
 
 public class FragmentFactory {
-    private static SparseArray<Fragment> mFragments=new SparseArray<>();
-    public static Fragment getFragment(int id){
+    private static SparseArray<Fragment> mFragments = new SparseArray<>();
+
+    public static Fragment getFragment(int id) {
         Fragment fragment = mFragments.get(id);
-        if (fragment==null){
-            switch (id){
+        if (fragment == null) {
+            switch (id) {
                 case R.id.navigation_movie:
-                    fragment=new MovieFragment();
+                    fragment = new MovieFragment();
                     break;
                 case R.id.navigation_music:
-                    fragment=new MusicFragment();
+                    fragment = new MusicFragment();
                     break;
-                case  R.id.navigation_book:
-                    fragment=new BookFragment();
+                case R.id.navigation_book:
+                    fragment = new BookFragment();
                     break;
                 case R.id.navigation_me:
-                    fragment=new MeFragment();
+                    fragment = new MeFragment();
                     break;
             }
-            mFragments.put(id,fragment);
+            mFragments.put(id, fragment);
         }
         return fragment;
     }

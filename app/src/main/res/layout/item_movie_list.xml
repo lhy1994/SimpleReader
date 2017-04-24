@@ -39,6 +39,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_year"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@id/tv_movie_title"
@@ -64,19 +65,20 @@
                 android:layout_alignLeft="@id/tv_movie_title"
                 android:layout_below="@id/tv_movie_title"
                 android:layout_marginTop="5dp"
+                android:padding="5dp"
                 android:orientation="horizontal">
 
                 <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:background="@drawable/bg_genre"-->
-                    <!--android:paddingBottom="2dp"-->
-                    <!--android:paddingLeft="8dp"-->
-                    <!--android:paddingRight="8dp"-->
-                    <!--android:paddingTop="2dp"-->
-                    <!--android:text="动作"-->
-                    <!--android:textColor="@android:color/white"-->
-                    <!--android:textSize="12sp" />-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@drawable/bg_genre"-->
+                <!--android:paddingBottom="2dp"-->
+                <!--android:paddingLeft="8dp"-->
+                <!--android:paddingRight="8dp"-->
+                <!--android:paddingTop="2dp"-->
+                <!--android:text="动作"-->
+                <!--android:textColor="@android:color/white"-->
+                <!--android:textSize="12sp" />-->
             </LinearLayout>
 
 

@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        Fragment fragment = FragmentFactory.getFragment(R.id.navigation_music);
-        getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
+        Fragment fragment = FragmentFactory.getFragment(R.id.navigation_movie);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener

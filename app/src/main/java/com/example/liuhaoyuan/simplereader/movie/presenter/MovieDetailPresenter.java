@@ -2,7 +2,7 @@ package com.example.liuhaoyuan.simplereader.movie.presenter;
 
 import com.example.liuhaoyuan.simplereader.bean.MovieDetailBean;
 import com.example.liuhaoyuan.simplereader.movie.MovieContract;
-import com.example.liuhaoyuan.simplereader.movie.model.MovieModel;
+import com.example.liuhaoyuan.simplereader.model.MovieModel;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;

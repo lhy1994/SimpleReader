@@ -7,4 +7,5 @@ package com.example.liuhaoyuan.simplereader;
 public class ConstantValues {
     public static final String DOUBAN_MOVIE_RANK_TITLE ="douban_rank_title";
     public static final String DOUBAN_MOVIE_ID="douban_movie_id";
+    public static final String DOUBAN_MOVIE_CATEGORY="douban_movie_category";
 }

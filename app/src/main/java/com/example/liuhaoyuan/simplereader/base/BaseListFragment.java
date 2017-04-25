@@ -23,14 +23,13 @@ import butterknife.OnClick;
  * Created by liuhaoyuan on 2017/4/25.
  */
 
-public abstract class BaseListFragment<P extends BasePresenter>extends  BaseFragment<P> implements XRecyclerView.LoadingListener {
+public abstract class BaseListFragment<P extends BasePresenter>extends  BaseFragment<P>
+        implements BaseListView, XRecyclerView.LoadingListener {
 
     @BindView(R.id.list)
     protected XRecyclerView mListView;
     @BindView(R.id.loading_view)
     protected ProgressBar mLoadingView;
-    @BindView(R.id.btn_retry)
-    protected Button mRetryBtn;
     @BindView(R.id.error_view)
     protected FrameLayout mErrorView;
 
@@ -55,21 +54,25 @@ public abstract class BaseListFragment<P extends BasePresenter>extends  BaseFrag
     @Override
     protected abstract P onCreatePresenter();
 
+    @Override
     public void showLoadingView(){
         mLoadingView.setVisibility(View.VISIBLE);
         mListView.setVisibility(View.GONE);
         mErrorView.setVisibility(View.GONE);
     }
 
+    @Override
     public void hideLoadingView(){
         mLoadingView.setVisibility(View.GONE);
     }
 
+    @Override
     public void showErrorView(){
         mErrorView.setVisibility(View.VISIBLE);
         mListView.setVisibility(View.GONE);
         mLoadingView.setVisibility(View.GONE);
     }
+    @Override
     public void hideErrorView(){
         mErrorView.setVisibility(View.GONE);
     }

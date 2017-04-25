@@ -1,4 +1,4 @@
-package com.example.liuhaoyuan.simplereader.movie.model;
+package com.example.liuhaoyuan.simplereader.model;
 
 import com.example.liuhaoyuan.simplereader.api.ApiEngine;
 import com.example.liuhaoyuan.simplereader.api.DouBanApiService;
@@ -12,9 +12,9 @@ import io.reactivex.Observable;
  * Created by liuhaoyuan on 17/4/23.
  */
 
-public class MovieModel implements MovieContract.Model {
+public class MovieModel implements MovieContract.Model{
     @Override
-    public Observable<MovieListBean> getMovieList(String rankTitle, String start, String count) {
+    public Observable<MovieListBean> getMovieRankList(String rankTitle, String start, String count) {
         DouBanApiService service = ApiEngine.getInstance().getDouBanApiService();
         Observable<MovieListBean> observable = null;
         switch (rankTitle) {
@@ -45,5 +45,10 @@ public class MovieModel implements MovieContract.Model {
     @Override
     public Observable<MovieDetailBean> getMovieDetail(String id) {
         return ApiEngine.getInstance().getDouBanApiService().getMovieDetail(id);
+    }
+
+    @Override
+    public Observable<MovieListBean> getMovieByTag(String tag, String start, String count) {
+        return ApiEngine.getInstance().getDouBanApiService().getMovieByTag(tag, start, count);
     }
 }

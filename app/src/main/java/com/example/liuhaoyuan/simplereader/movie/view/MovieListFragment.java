@@ -2,7 +2,7 @@ package com.example.liuhaoyuan.simplereader.movie.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
@@ -11,31 +11,26 @@ import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.base.BaseListFragment;
 import com.example.liuhaoyuan.simplereader.bean.MovieListBean;
 import com.example.liuhaoyuan.simplereader.movie.MovieContract;
-import com.example.liuhaoyuan.simplereader.movie.presenter.MovieRankListPresenter;
-import com.example.liuhaoyuan.simplereader.movie.adapter.MovieRankAdapter;
+import com.example.liuhaoyuan.simplereader.movie.adapter.MovieListAdapter;
+import com.example.liuhaoyuan.simplereader.movie.presenter.MovieListPresenter;
 import com.example.liuhaoyuan.simplereader.util.DataUtils;
 
 /**
- * Created by liuhaoyuan on 17/4/23.
+ * Created by liuhaoyuan on 17/4/25.
  */
 
-public class MovieRankListFragment extends BaseListFragment<MovieContract.BaseMovieListPresenter> implements MovieContract.MovieListView {
+public class MovieListFragment extends BaseListFragment<MovieContract.BaseMovieListPresenter> implements MovieContract.MovieListView {
 
     private int mCurrentCount = 0;
     private String mRankTitle;
-    private MovieRankAdapter mAdapter;
     private int mTotal;
-
-    @Override
-    protected MovieContract.BaseMovieListPresenter onCreatePresenter() {
-        return new MovieRankListPresenter(this);
-    }
+    private MovieListAdapter mAdapter;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRankTitle = getArguments().getString(ConstantValues.DOUBAN_MOVIE_RANK_TITLE);
-        mPresenter.getMovieList(mRankTitle, "0", "20", false);
+        String category = getArguments().getString(ConstantValues.DOUBAN_MOVIE_CATEGORY);
+        mPresenter.getMovieList(category, "0", "20", false);
     }
 
     @Override
@@ -47,8 +42,8 @@ public class MovieRankListFragment extends BaseListFragment<MovieContract.BaseMo
         mCurrentCount += bean.count;
         if (!DataUtils.isEmptyList(bean.subjects)) {
             if (mAdapter == null) {
-                mAdapter = new MovieRankAdapter(bean.subjects, getContext());
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                mAdapter = new MovieListAdapter(getContext(), bean.subjects);
+                RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
                 mListView.setLayoutManager(layoutManager);
                 mListView.setAdapter(mAdapter);
             } else {
@@ -70,6 +65,11 @@ public class MovieRankListFragment extends BaseListFragment<MovieContract.BaseMo
             mAdapter.addMoreData(bean.subjects);
             mListView.loadMoreComplete();
         }
+    }
+
+    @Override
+    protected MovieContract.BaseMovieListPresenter onCreatePresenter() {
+        return new MovieListPresenter(this);
     }
 
     @Override

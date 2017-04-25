@@ -63,15 +63,15 @@ public class MovieRankFragment extends Fragment {
             fragment.setArguments(bundle);
             fragments.add(fragment);
         }
-        MoviePagerAdapter adapter = new MoviePagerAdapter(getChildFragmentManager(), fragments);
+        MovieRankPagerAdapter adapter = new MovieRankPagerAdapter(getChildFragmentManager(), fragments);
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
-    private class MoviePagerAdapter extends FragmentPagerAdapter {
+    private class MovieRankPagerAdapter extends FragmentPagerAdapter {
         private List<MovieRankListFragment> mFragments;
 
-        private MoviePagerAdapter(FragmentManager fragmentManager, List<MovieRankListFragment> mFragments) {
+        private MovieRankPagerAdapter(FragmentManager fragmentManager, List<MovieRankListFragment> mFragments) {
             super(fragmentManager);
             this.mFragments = mFragments;
         }

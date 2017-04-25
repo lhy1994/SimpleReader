@@ -1,6 +1,8 @@
-package com.example.liuhaoyuan.simplereader.movie;
+package com.example.liuhaoyuan.simplereader.movie.presenter;
 
 import com.example.liuhaoyuan.simplereader.bean.MovieListBean;
+import com.example.liuhaoyuan.simplereader.movie.MovieContract;
+import com.example.liuhaoyuan.simplereader.movie.model.MovieModel;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -12,11 +14,11 @@ import io.reactivex.schedulers.Schedulers;
  * Created by liuhaoyuan on 17/4/23.
  */
 
-public class MovieListPresenter extends MovieListContract.Presenter {
+public class MovieListPresenter extends MovieContract.MovieListPresenter {
 
-    public MovieListPresenter(MovieListContract.View view) {
+    public MovieListPresenter(MovieContract.MovieListView view) {
         this.mView = view;
-        mModel = new MovieListModel();
+        mModel = new MovieModel();
     }
 
     @Override
@@ -38,7 +40,7 @@ public class MovieListPresenter extends MovieListContract.Presenter {
                     public void accept(@NonNull Throwable throwable) throws Exception {
                         throwable.printStackTrace();
                         if (!loadMore){
-                            mView.showErrorView();
+//                            mView.showErrorView();
                         }else {
                             mView.addMoreData(null);
                         }

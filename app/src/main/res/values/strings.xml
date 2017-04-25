@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">SimpleReader</string>
-    <string name="title_movie">Movie</string>
-    <string name="title_book">Book</string>
-    <string name="title_music">Music</string>
-    <string name="title_me">Me</string>
+    <string name="title_movie">电影</string>
+    <string name="title_movie_rank">电影排行</string>
+    <string name="title_book">图书</string>
+    <string name="title_music">音乐</string>
+    <string name="title_me">我</string>
     <string-array name="douban_movie_ranks_title">
         <item>正在热映</item>
         <item>即将上映</item>
@@ -11,5 +12,17 @@
         <item>口碑榜</item>
         <item>北美票房榜</item>
         <item>新片榜</item>
+    </string-array>
+    <string-array name="douban_movie_category">
+        <item>剧情</item>
+        <item>爱情</item>
+        <item>动作</item>
+        <item>犯罪</item>
+        <item>喜剧</item>
+        <item>科幻</item>
+        <item>动画</item>
+        <item>历史</item>
+        <item>战争</item>
+        <item>灾难</item>
     </string-array>
 </resources>

@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        Fragment fragment = FragmentFactory.getFragment(R.id.navigation_movie);
+        Fragment fragment = FragmentFactory.getFragment(R.id.navigation_movie_rank);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-        setTitle(getString(R.string.title_movie));
+        setTitle(getString(R.string.title_movie_rank));
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
+                case R.id.navigation_movie_rank:
+                    setTitle(getString(R.string.title_movie_rank));
+                    break;
                 case R.id.navigation_movie:
                     setTitle(getString(R.string.title_movie));
                     break;

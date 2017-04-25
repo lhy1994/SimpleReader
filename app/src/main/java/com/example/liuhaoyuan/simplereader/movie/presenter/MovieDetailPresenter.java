@@ -1,6 +1,8 @@
-package com.example.liuhaoyuan.simplereader.movie;
+package com.example.liuhaoyuan.simplereader.movie.presenter;
 
 import com.example.liuhaoyuan.simplereader.bean.MovieDetailBean;
+import com.example.liuhaoyuan.simplereader.movie.MovieContract;
+import com.example.liuhaoyuan.simplereader.movie.model.MovieModel;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -12,10 +14,10 @@ import io.reactivex.schedulers.Schedulers;
  * Created by liuhaoyuan on 17/4/24.
  */
 
-public class MovieDetailPresenter extends MovieDetailContract.Presenter{
-    public MovieDetailPresenter(MovieDetailContract.View view) {
+public class MovieDetailPresenter extends MovieContract.MovieDetailPresenter {
+    public MovieDetailPresenter(MovieContract.MovieDetailView view) {
         this.mView=view;
-        this.mModel=new MovieDetailModel();
+        this.mModel=new MovieModel();
     }
 
     @Override

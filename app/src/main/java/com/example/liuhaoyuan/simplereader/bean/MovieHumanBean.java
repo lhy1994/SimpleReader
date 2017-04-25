@@ -1,12 +1,12 @@
 package com.example.liuhaoyuan.simplereader.bean;
 
 /**
- * Created by liuhaoyuan on 17/4/24.
+ * Created by liuhaoyuan on 2017/4/25.
  */
 
-public class DirectorBean {
+public class MovieHumanBean {
     public String alt;
-    public AvatarsBeanX avatars;
+    public ImagesBean avatars;
     public String name;
     public String id;
 }

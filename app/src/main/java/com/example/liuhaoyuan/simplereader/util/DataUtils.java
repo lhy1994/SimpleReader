@@ -1,5 +1,9 @@
 package com.example.liuhaoyuan.simplereader.util;
 
+import android.text.TextUtils;
+
+import com.example.liuhaoyuan.simplereader.bean.ImagesBean;
+
 import java.util.List;
 
 /**
@@ -12,5 +16,14 @@ public class DataUtils {
     }
     public static boolean dataValid(Object data){
         return data!=null;
+    }
+    public static String getImageUrl(ImagesBean imagesBean) {
+        if (!TextUtils.isEmpty(imagesBean.large)) {
+            return imagesBean.large;
+        }
+        if (!TextUtils.isEmpty(imagesBean.medium)) {
+            return imagesBean.medium;
+        }
+        return imagesBean.small;
     }
 }

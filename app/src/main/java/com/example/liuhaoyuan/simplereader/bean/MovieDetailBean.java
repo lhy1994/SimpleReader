@@ -62,7 +62,7 @@ public class MovieDetailBean {
     public int ratings_count;
     public List<String> countries;
     public List<String> genres;
-    public List<CastBean> casts;
-    public List<DirectorBean> directors;
+    public List<MovieHumanBean> casts;
+    public List<MovieHumanBean> directors;
     public List<String> aka;
 }

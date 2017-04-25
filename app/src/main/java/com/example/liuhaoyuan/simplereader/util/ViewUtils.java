@@ -10,14 +10,22 @@ import android.widget.TextView;
 
 public class ViewUtils {
     public static void setTextViewText(TextView textView, String text) {
+//        setTextViewText(textView, null, text, null);
         if (textView != null && !TextUtils.isEmpty(text)) {
             textView.setText(text);
         }
     }
 
-    public static void setTextViewText(TextView textView,String prefix, String text) {
+    public static void setTextViewText(TextView textView, String prefix, String text) {
+//        setTextViewText(textView, prefix, null);
         if (textView != null && !TextUtils.isEmpty(text)) {
             textView.setText(prefix+text);
+        }
+    }
+
+    public static void setTextViewText(TextView textView, String prefix, String text, String append) {
+        if (textView != null && !TextUtils.isEmpty(text)) {
+            textView.setText(prefix+text+append);
         }
     }
 

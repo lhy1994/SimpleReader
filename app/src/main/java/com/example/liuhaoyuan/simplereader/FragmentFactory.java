@@ -6,6 +6,7 @@ import android.util.SparseArray;
 import com.example.liuhaoyuan.simplereader.book.BookFragment;
 import com.example.liuhaoyuan.simplereader.me.MeFragment;
 import com.example.liuhaoyuan.simplereader.movie.MovieFragment;
+import com.example.liuhaoyuan.simplereader.movie.MovieRankFragment;
 import com.example.liuhaoyuan.simplereader.music.MusicFragment;
 
 /**
@@ -19,8 +20,11 @@ public class FragmentFactory {
         Fragment fragment = mFragments.get(id);
         if (fragment == null) {
             switch (id) {
+                case R.id.navigation_movie_rank:
+                    fragment = new MovieRankFragment();
+                    break;
                 case R.id.navigation_movie:
-                    fragment = new MovieFragment();
+                    fragment=new MovieFragment();
                     break;
                 case R.id.navigation_music:
                     fragment = new MusicFragment();

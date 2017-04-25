@@ -1,6 +1,7 @@
 package com.example.liuhaoyuan.simplereader.movie.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -12,11 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
-import com.example.liuhaoyuan.simplereader.bean.CastBean;
-import com.example.liuhaoyuan.simplereader.bean.DirectorBean;
-import com.example.liuhaoyuan.simplereader.bean.ImagesBean;
-import com.example.liuhaoyuan.simplereader.bean.MovieListBean;
+import com.example.liuhaoyuan.simplereader.bean.MovieHumanBean;
+import com.example.liuhaoyuan.simplereader.bean.MovieItemBean;
+import com.example.liuhaoyuan.simplereader.movie.view.MovieDetailActivity;
 import com.example.liuhaoyuan.simplereader.util.DataUtils;
 import com.example.liuhaoyuan.simplereader.util.ViewUtils;
 
@@ -29,22 +30,22 @@ import butterknife.ButterKnife;
  * Created by liuhaoyuan on 17/4/24.
  */
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
-    private List<MovieListBean.SubjectsBean> data;
-    private Context context;
+public class MovieRankAdapter extends RecyclerView.Adapter<MovieRankAdapter.MovieHolder> {
+    private List<MovieItemBean> mData;
+    private Context mContext;
 
-    public MovieAdapter(List<MovieListBean.SubjectsBean> data, Context context) {
-        this.data = data;
-        this.context = context;
+    public MovieRankAdapter(List<MovieItemBean> data, Context context) {
+        this.mData = data;
+        this.mContext = context;
     }
 
-    public void setData(List<MovieListBean.SubjectsBean> data) {
-        this.data = data;
+    public void setmData(List<MovieItemBean> mData) {
+        this.mData = mData;
         notifyDataSetChanged();
     }
 
-    public void addMoreData(List<MovieListBean.SubjectsBean> data) {
-        this.data.addAll(data);
+    public void addMoreData(List<MovieItemBean> data) {
+        this.mData.addAll(data);
         notifyDataSetChanged();
     }
 
@@ -56,35 +57,34 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
     @Override
     public void onBindViewHolder(MovieHolder holder, int position) {
-        MovieListBean.SubjectsBean subject = data.get(position);
-        if (subject.images != null) {
-            String imageUrl = getImageUrl(subject.images);
+        final MovieItemBean movieItem = mData.get(position);
+        if (movieItem.images != null) {
+            String imageUrl = DataUtils.getImageUrl(movieItem.images);
             if (!TextUtils.isEmpty(imageUrl)) {
-                Glide.with(context).load(imageUrl).into(holder.mPosterIv);
+                Glide.with(mContext).load(imageUrl).into(holder.mPosterIv);
             }
         }
-        ViewUtils.setTextViewText(holder.mOriginNameTv, "原名:  ", subject.original_title);
-        ViewUtils.setTextViewText(holder.mTitleTv, subject.title);
-        ViewUtils.setTextViewText(holder.mYearTv, subject.year);
-        ViewUtils.setTextViewText(holder.mCollectCountTv, String.valueOf(subject.collect_count));
+        ViewUtils.setTextViewText(holder.mTitleTv, movieItem.title);
+        ViewUtils.setTextViewText(holder.mYearTv, movieItem.year);
+        ViewUtils.setTextViewText(holder.mCollectCountTv, String.valueOf(movieItem.collect_count));
 
-        if (subject.rating != null) {
-            ViewUtils.setTextViewText(holder.mRatingTv, subject.rating.average + "");
+        if (movieItem.rating != null) {
+            ViewUtils.setTextViewText(holder.mRatingTv, movieItem.rating.average + "");
         }
-        if (!DataUtils.isEmptyList(subject.genres)) {
+        if (!DataUtils.isEmptyList(movieItem.genres)) {
             holder.mGenre.removeAllViews();
-            for (String genre : subject.genres) {
-                TextView textView = new TextView(context);
+            for (String genre : movieItem.genres) {
+                TextView textView = new TextView(mContext);
                 ViewUtils.setTextViewText(textView, genre);
                 textView.setBackgroundResource(R.drawable.bg_genre);
                 textView.setTextColor(Color.WHITE);
-                textView.setPadding(ViewUtils.dpTopx(context, 8),
-                        ViewUtils.dpTopx(context, 2),
-                        ViewUtils.dpTopx(context, 8),
-                        ViewUtils.dpTopx(context, 2));
+                textView.setPadding(ViewUtils.dpTopx(mContext, 8),
+                        ViewUtils.dpTopx(mContext, 2),
+                        ViewUtils.dpTopx(mContext, 8),
+                        ViewUtils.dpTopx(mContext, 2));
                 textView.setTextSize(11);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.setMargins(0, 0, ViewUtils.dpTopx(context, 5), 0);
+                params.setMargins(0, 0, ViewUtils.dpTopx(mContext, 5), 0);
                 textView.setLayoutParams(params);
                 holder.mGenre.addView(textView);
             }
@@ -93,9 +93,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
             holder.mGenre.setVisibility(View.GONE);
         }
 
-        if (!DataUtils.isEmptyList(subject.directors)) {
+        if (!DataUtils.isEmptyList(movieItem.directors)) {
             StringBuilder directorsString = new StringBuilder();
-            for (DirectorBean director : subject.directors) {
+            for (MovieHumanBean director : movieItem.directors) {
                 directorsString.append(director.name).append(" ");
             }
             ViewUtils.setTextViewText(holder.mDirectorsTV, "导演：", directorsString.toString());
@@ -103,9 +103,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         } else {
             holder.mDirectorsTV.setVisibility(View.GONE);
         }
-        if (!DataUtils.isEmptyList(subject.casts)) {
+        if (!DataUtils.isEmptyList(movieItem.casts)) {
             StringBuilder actorsString = new StringBuilder();
-            for (CastBean cast : subject.casts) {
+            for (MovieHumanBean cast : movieItem.casts) {
                 actorsString.append(cast.name).append(" ");
             }
             holder.mActorsTv.setText(actorsString);
@@ -114,21 +114,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         } else {
             holder.mActorsTv.setVisibility(View.GONE);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(mContext, MovieDetailActivity.class);
+                intent.putExtra(ConstantValues.DOUBAN_MOVIE_ID,movieItem.id);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
-    }
-
-    public String getImageUrl(ImagesBean imagesBean) {
-        if (!TextUtils.isEmpty(imagesBean.large)) {
-            return imagesBean.large;
-        }
-        if (!TextUtils.isEmpty(imagesBean.medium)) {
-            return imagesBean.medium;
-        }
-        return imagesBean.small;
+        return mData.size();
     }
 
     public static class MovieHolder extends RecyclerView.ViewHolder {
@@ -143,8 +141,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         TextView mRatingTv;
         @BindView(R.id.genre)
         LinearLayout mGenre;
-        @BindView(R.id.tv_origin_name)
-        TextView mOriginNameTv;
         @BindView(R.id.tv_director)
         TextView mDirectorsTV;
         @BindView(R.id.tv_actor)

@@ -14,7 +14,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (mPresenter!=null){
+        if (mPresenter==null){
             mPresenter= onCreatePresenter();
         }
     }

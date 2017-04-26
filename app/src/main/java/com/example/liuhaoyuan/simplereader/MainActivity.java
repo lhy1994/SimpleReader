@@ -45,9 +45,6 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_book:
                     setTitle(getString(R.string.title_book));
                     break;
-                case R.id.navigation_me:
-                    setTitle(getString(R.string.title_me));
-                    break;
             }
             Fragment fragment = FragmentFactory.getFragment(item.getItemId());
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();

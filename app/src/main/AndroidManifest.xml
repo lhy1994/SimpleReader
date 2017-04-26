@@ -26,8 +26,13 @@
         </activity>
         <activity
             android:name=".movie.view.MovieDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".movie.view.MovieHumanDetailActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".movie.view.MovieHumanDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".book.BookDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

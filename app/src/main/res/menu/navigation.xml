@@ -19,9 +19,4 @@
         android:id="@+id/navigation_book"
         android:icon="@drawable/ic_book_black_36dp"
         android:title="@string/title_book" />
-    <item
-        android:id="@+id/navigation_me"
-        android:icon="@drawable/ic_person_black_36dp"
-        android:title="@string/title_me" />
-
 </menu>

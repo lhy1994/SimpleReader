@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
 import com.example.liuhaoyuan.simplereader.adapter.CommenPagerAdapter;
+import com.example.liuhaoyuan.simplereader.bean.BookItemBean;
 import com.example.liuhaoyuan.simplereader.music.MusicListFragment;
 
 import java.util.ArrayList;
@@ -53,15 +54,15 @@ public class BookFragment extends Fragment {
     }
 
     private void setupViewPager() {
-        List<MusicListFragment> fragments = new ArrayList<>();
+        List<BookListFragment> fragments = new ArrayList<>();
         for (String category : mCategory) {
-            MusicListFragment fragment = new MusicListFragment();
+            BookListFragment fragment = new BookListFragment();
             Bundle bundle = new Bundle();
             bundle.putString(ConstantValues.DOUBAN_BOOK_CATEGORY, category);
             fragment.setArguments(bundle);
             fragments.add(fragment);
         }
-        CommenPagerAdapter<MusicListFragment> adapter = new CommenPagerAdapter<>(getChildFragmentManager(),fragments, mCategory);
+        CommenPagerAdapter<BookListFragment> adapter = new CommenPagerAdapter<>(getChildFragmentManager(),fragments, mCategory);
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }

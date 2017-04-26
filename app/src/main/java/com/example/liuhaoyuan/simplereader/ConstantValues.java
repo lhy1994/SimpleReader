@@ -11,4 +11,5 @@ public class ConstantValues {
     public static final String DOUBAN_MOVIE_HUMAN_ID="douban_movie_human_id";
     public static final String DOUBAN_MUSIC_CATEGORY="douban_music_category";
     public static final String DOUBAN_BOOK_CATEGORY="douban_book_category";
+    public static final String DOUBAN_BOOK_ID="douban_book_id";
 }

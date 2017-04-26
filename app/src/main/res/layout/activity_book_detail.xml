@@ -13,13 +13,13 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="snap|scroll"
-            android:fitsSystemWindows="true"
             app:title="">
 
             <ImageView
-                android:id="@+id/iv_movie_human"
+                android:id="@+id/iv_poster"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
@@ -44,57 +44,78 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_name"
+                android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="2dp"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"
+                android:text="Name"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="22sp" />
 
-            <TextView
-                android:id="@+id/tv_name_en"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                android:paddingLeft="20dp"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_gender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="3dp"
-                android:paddingLeft="20dp"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_born_place"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
-                android:paddingLeft="20dp"
-                android:paddingTop="3dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="15dp"
+                    android:text="8.0"
+                    android:textColor="?attr/colorAccent"
+                    android:textSize="22sp" />
+
+                <RatingBar
+                    android:id="@+id/rating_bar"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:rating="4" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_origin_title"
+                style="@style/SecondaryInfo"
+                />
+
+            <TextView
+                android:id="@+id/tv_author"
+                style="@style/SecondaryInfo"
+                />
+
+            <TextView
+                android:id="@+id/tv_pubdate"
+                style="@style/SecondaryInfo"
+                />
+            <TextView
+                android:id="@+id/tv_publisher"
+                style="@style/SecondaryInfo"
                 />
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="15dp"
                 android:layout_marginBottom="5dp"
-                android:background="@android:color/darker_gray"/>
-
+                android:layout_marginRight="15dp"
+                android:background="@android:color/darker_gray"
+                android:layout_height="1dp"/>
 
             <TextView
                 style="@style/SubTitle"
                 android:paddingBottom="5dp"
                 android:paddingLeft="20dp"
                 android:paddingTop="5dp"
-                android:text="个人简介" />
+                android:text="作者介绍" />
 
             <TextView
-                android:id="@+id/tv_summary"
+                android:id="@+id/tv_author_intro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
@@ -106,25 +127,11 @@
                 android:paddingBottom="5dp"
                 android:paddingLeft="20dp"
                 android:paddingTop="5dp"
-                android:text="代表作品" />
+                android:text="同系列图书" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/lv_works"
+                android:id="@+id/lv_series"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <TextView
-                style="@style/SubTitle"
-                android:text="人物照片"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:paddingLeft="20dp"
-                android:id="@+id/tv_photos"
-                />
-
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:id="@+id/lv_photos"
-                android:padding="5dp"
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

@@ -32,9 +32,6 @@ public class FragmentFactory {
                 case R.id.navigation_book:
                     fragment = new BookFragment();
                     break;
-                case R.id.navigation_me:
-                    fragment = new MeFragment();
-                    break;
             }
             mFragments.put(id, fragment);
         }

@@ -4,16 +4,23 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.liuhaoyuan.simplereader.ConstantValues;
+import com.example.liuhaoyuan.simplereader.base.BaseListAdapter;
 import com.example.liuhaoyuan.simplereader.base.BaseListFragment;
+import com.example.liuhaoyuan.simplereader.bean.BaseListBean;
+import com.example.liuhaoyuan.simplereader.bean.MovieItemBean;
 import com.example.liuhaoyuan.simplereader.bean.MovieListBean;
 import com.example.liuhaoyuan.simplereader.movie.MovieContract;
 import com.example.liuhaoyuan.simplereader.movie.adapter.MovieListAdapter;
 import com.example.liuhaoyuan.simplereader.movie.presenter.MovieListPresenter;
 import com.example.liuhaoyuan.simplereader.util.DataUtils;
+
+import java.util.List;
 
 /**
  * Created by liuhaoyuan on 17/4/25.
@@ -21,76 +28,48 @@ import com.example.liuhaoyuan.simplereader.util.DataUtils;
 
 public class MovieListFragment extends BaseListFragment<MovieContract.BaseMovieListPresenter> implements MovieContract.MovieListView {
 
-    private int mCurrentCount = 0;
-    private String mRankTitle;
-    private int mTotal;
-    private MovieListAdapter mAdapter;
+    private String mCategory;
 
+    @Nullable
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        String category = getArguments().getString(ConstantValues.DOUBAN_MOVIE_CATEGORY);
-        mPresenter.getMovieList(category, "0", "20", false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mCategory = getArguments().getString(ConstantValues.DOUBAN_MOVIE_CATEGORY);
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
-    public void updateList(MovieListBean bean) {
-        hideLoadingView();
-        hideErrorView();
-        mListView.setVisibility(View.VISIBLE);
-        mTotal = bean.total;
-        mCurrentCount += bean.count;
-        if (!DataUtils.isEmptyList(bean.subjects)) {
-            if (mAdapter == null) {
-                mAdapter = new MovieListAdapter(getContext(), bean.subjects);
-                RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
-                mListView.setLayoutManager(layoutManager);
-                mListView.setAdapter(mAdapter);
-            } else {
-                mAdapter.setData(bean.subjects);
-                mListView.refreshComplete();
-            }
-        }
+    protected void loadData() {
+        mPresenter.getMovieList(mCategory, "0", "20", false);
     }
 
     @Override
-    public void addMoreData(MovieListBean bean) {
-        if (bean == null) {
-            mListView.loadMoreComplete();
-            Toast.makeText(getContext(), "加载失败，请重试", Toast.LENGTH_LONG).show();
-            return;
-        }
-        mCurrentCount += bean.count;
-        if (!DataUtils.isEmptyList(bean.subjects)) {
-            mAdapter.addMoreData(bean.subjects);
-            mListView.loadMoreComplete();
+    protected void loadMoreData(int start) {
+        mPresenter.getMovieList(mCategory, String.valueOf(start), "20", true);
+    }
+
+    @Override
+    protected BaseListAdapter<List<MovieItemBean>, MovieListAdapter.MovieListHolder> onCreateAdapter(BaseListBean bean) {
+        MovieListBean data = (MovieListBean) bean;
+        return new MovieListAdapter(getContext(), data.subjects);
+    }
+
+    @Override
+    protected RecyclerView.LayoutManager onCreateLayoutManager() {
+        return new GridLayoutManager(getContext(), 3);
+    }
+
+    @Override
+    protected void setAdapterData(BaseListBean bean, boolean append) {
+        MovieListBean data= (MovieListBean) bean;
+        if (append){
+            mAdapter.addMoreData(data.subjects);
+        }else {
+            mAdapter.setData(data.subjects);
         }
     }
 
     @Override
     protected MovieContract.BaseMovieListPresenter onCreatePresenter() {
         return new MovieListPresenter(this);
-    }
-
-    @Override
-    public void onRefresh() {
-        mCurrentCount = 0;
-        mPresenter.getMovieList(mRankTitle, "0", "20", false);
-    }
-
-    @Override
-    public void onLoadMore() {
-        if (mCurrentCount < mTotal) {
-            mPresenter.getMovieList(mRankTitle, String.valueOf(mCurrentCount), "20", true);
-        } else {
-            mListView.loadMoreComplete();
-            Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    public void onRetryClick() {
-        showLoadingView();
-        mPresenter.getMovieList(mRankTitle, "0", "20", false);
     }
 }

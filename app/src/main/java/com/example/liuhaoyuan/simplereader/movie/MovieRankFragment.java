@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
+import com.example.liuhaoyuan.simplereader.adapter.CommenPagerAdapter;
 import com.example.liuhaoyuan.simplereader.movie.view.MovieRankListFragment;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class MovieRankFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = View.inflate(getContext(), R.layout.fragment_movie, null);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         return view;
@@ -63,32 +64,8 @@ public class MovieRankFragment extends Fragment {
             fragment.setArguments(bundle);
             fragments.add(fragment);
         }
-        MovieRankPagerAdapter adapter = new MovieRankPagerAdapter(getChildFragmentManager(), fragments);
+        CommenPagerAdapter<MovieRankListFragment> adapter = new CommenPagerAdapter<>(getChildFragmentManager(), fragments, mRankTitles);
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
-    }
-
-    private class MovieRankPagerAdapter extends FragmentPagerAdapter {
-        private List<MovieRankListFragment> mFragments;
-
-        private MovieRankPagerAdapter(FragmentManager fragmentManager, List<MovieRankListFragment> mFragments) {
-            super(fragmentManager);
-            this.mFragments = mFragments;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragments.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mRankTitles[position];
-        }
     }
 }

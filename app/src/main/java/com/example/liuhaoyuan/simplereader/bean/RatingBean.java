@@ -9,4 +9,5 @@ public class RatingBean {
     public double average;
     public String stars;
     public int min;
+    public int numRaters;
 }

@@ -39,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_movie:
                     setTitle(getString(R.string.title_movie));
                     break;
-                case R.string.title_music:
+                case R.id.navigation_music:
                     setTitle(getString(R.string.title_music));
                     break;
-                case R.id.navigation_music:
+                case R.id.navigation_book:
                     setTitle(getString(R.string.title_book));
                     break;
                 case R.id.navigation_me:

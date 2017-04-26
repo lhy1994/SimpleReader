@@ -25,4 +25,13 @@
         <item>战争</item>
         <item>灾难</item>
     </string-array>
+    <string-array name="douban_music_category">
+        <item>流行</item>
+        <item>华语</item>
+        <item>欧美</item>
+        <item>日本</item>
+        <item>韩国</item>
+        <item>摇滚</item>
+        <item>民谣</item>
+    </string-array>
 </resources>

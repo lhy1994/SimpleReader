@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
+import com.example.liuhaoyuan.simplereader.adapter.CommenPagerAdapter;
 import com.example.liuhaoyuan.simplereader.base.BaseFragment;
 import com.example.liuhaoyuan.simplereader.movie.view.MovieListFragment;
 import com.example.liuhaoyuan.simplereader.movie.view.MovieRankListFragment;
@@ -64,32 +65,8 @@ public class MovieFragment extends Fragment {
             fragment.setArguments(bundle);
             fragments.add(fragment);
         }
-        MoviePagerAdapter adapter = new MoviePagerAdapter(getChildFragmentManager(), fragments);
+        CommenPagerAdapter<MovieListFragment> adapter = new CommenPagerAdapter<>(getChildFragmentManager(), fragments,mMovieCategory);
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
-    }
-
-    private class MoviePagerAdapter extends FragmentPagerAdapter {
-        private List<MovieListFragment> mFragments;
-
-        private MoviePagerAdapter(FragmentManager fragmentManager, List<MovieListFragment> mFragments) {
-            super(fragmentManager);
-            this.mFragments = mFragments;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragments.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mMovieCategory[position];
-        }
     }
 }

@@ -30,7 +30,7 @@ public class MovieListPresenter extends MovieContract.BaseMovieListPresenter {
                     @Override
                     public void accept(@NonNull MovieListBean bean) throws Exception {
                         if (loadMore) {
-                            mView.addMoreData(bean);
+                            mView.addMoreListData(bean);
                         } else {
                             mView.updateList(bean);
                         }
@@ -42,7 +42,7 @@ public class MovieListPresenter extends MovieContract.BaseMovieListPresenter {
                         if (!loadMore) {
                             mView.showErrorView();
                         } else {
-                            mView.addMoreData(null);
+                            mView.addMoreListData(null);
                         }
                     }
                 });

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
+import com.example.liuhaoyuan.simplereader.base.BaseListAdapter;
 import com.example.liuhaoyuan.simplereader.bean.MovieHumanBean;
 import com.example.liuhaoyuan.simplereader.bean.MovieItemBean;
 import com.example.liuhaoyuan.simplereader.movie.view.MovieDetailActivity;
@@ -30,8 +31,7 @@ import butterknife.ButterKnife;
  * Created by liuhaoyuan on 17/4/24.
  */
 
-public class MovieRankAdapter extends RecyclerView.Adapter<MovieRankAdapter.MovieHolder> {
-    private List<MovieItemBean> mData;
+public class MovieRankAdapter extends BaseListAdapter<List<MovieItemBean>,MovieRankAdapter.MovieRankHolder> {
     private Context mContext;
 
     public MovieRankAdapter(List<MovieItemBean> data, Context context) {
@@ -39,24 +39,14 @@ public class MovieRankAdapter extends RecyclerView.Adapter<MovieRankAdapter.Movi
         this.mContext = context;
     }
 
-    public void setData(List<MovieItemBean> mData) {
-        this.mData = mData;
-        notifyDataSetChanged();
-    }
-
-    public void addMoreData(List<MovieItemBean> data) {
-        this.mData.addAll(data);
-        notifyDataSetChanged();
-    }
-
     @Override
-    public MovieHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MovieRankHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie_rank_list, parent, false);
-        return new MovieHolder(view);
+        return new MovieRankHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MovieHolder holder, int position) {
+    public void onBindViewHolder(MovieRankHolder holder, int position) {
         final MovieItemBean movieItem = mData.get(position);
         if (movieItem.images != null) {
             String imageUrl = DataUtils.getImageUrl(movieItem.images);
@@ -129,7 +119,7 @@ public class MovieRankAdapter extends RecyclerView.Adapter<MovieRankAdapter.Movi
         return mData.size();
     }
 
-    public static class MovieHolder extends RecyclerView.ViewHolder {
+    public static class MovieRankHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.iv_poster)
         ImageView mPosterIv;
@@ -148,7 +138,7 @@ public class MovieRankAdapter extends RecyclerView.Adapter<MovieRankAdapter.Movi
         @BindView(R.id.tv_collect_count)
         TextView mCollectCountTv;
 
-        MovieHolder(View itemView) {
+        MovieRankHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

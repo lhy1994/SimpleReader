@@ -18,14 +18,14 @@
             <RelativeLayout
                 android:id="@+id/header_view"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_poster"
                     android:layout_width="120dp"
                     android:layout_marginTop="10dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="180dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     app:cardCornerRadius="2dp"
@@ -50,7 +50,6 @@
                     android:layout_toRightOf="@id/card_poster"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:text="Title"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -62,7 +61,7 @@
                     android:layout_below="@id/tv_title"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="5dp"
-                    android:text="8.0"
+                    android:text="0.0"
                     android:textColor="@color/colorAccent"
                     android:textSize="20sp" />
 
@@ -74,10 +73,9 @@
                     android:layout_alignTop="@id/tv_rating"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="5dp"
                     android:layout_toRightOf="@id/tv_rating"
-                    android:max="5"
-                    android:rating="4" />
+                     />
 
                 <TextView
                     android:id="@+id/tv_rating_count"
@@ -86,7 +84,6 @@
                     android:layout_alignLeft="@id/tv_rating"
                     android:layout_below="@id/tv_rating"
                     android:layout_marginTop="3dp"
-                    android:text="2333人评分"
                     android:textSize="14sp" />
 
                 <TextView
@@ -97,7 +94,6 @@
                     android:layout_below="@id/tv_rating_count"
                     android:layout_marginTop="3dp"
                     android:paddingRight="10dp"
-                    android:text="美国"
                     android:textSize="14sp"
                     android:textStyle="normal" />
 
@@ -107,7 +103,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_country"
                     android:layout_marginTop="3dp"
-                    android:text="2016"
                     android:layout_alignLeft="@id/tv_rating"
                     android:textSize="14sp"
                     android:textStyle="normal" />
@@ -120,10 +115,7 @@
                     android:layout_alignLeft="@id/tv_rating"
                     android:layout_below="@id/tv_year"
                     android:layout_marginTop="8dp"
-                    android:paddingBottom="2dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="2dp" />
+                    />
             </RelativeLayout>
 
             <TextView
@@ -139,7 +131,19 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
+                android:maxLines="4"
+                android:ellipsize="end"
                 android:textSize="14sp" />
+            <TextView
+                android:id="@+id/btn_more_summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="More"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:textColor="?attr/colorAccent"
+                />
 
             <TextView
                 style="@style/SubTitle"

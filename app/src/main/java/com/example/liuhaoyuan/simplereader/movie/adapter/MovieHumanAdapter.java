@@ -1,6 +1,7 @@
 package com.example.liuhaoyuan.simplereader.movie.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
 import com.example.liuhaoyuan.simplereader.bean.MovieHumanBean;
+import com.example.liuhaoyuan.simplereader.movie.view.MovieHumanDetailActivity;
 import com.example.liuhaoyuan.simplereader.util.DataUtils;
 import com.example.liuhaoyuan.simplereader.util.ViewUtils;
 
@@ -40,10 +43,18 @@ public class MovieHumanAdapter extends RecyclerView.Adapter<MovieHumanAdapter.Mo
 
     @Override
     public void onBindViewHolder(MovieHumanHolder holder, int position) {
-        MovieHumanBean humanBean = mData.get(position);
+        final MovieHumanBean humanBean = mData.get(position);
         String imageUrl = DataUtils.getImageUrl(humanBean.avatars);
         Glide.with(mContext).load(imageUrl).into(holder.mMovieHumanIv);
         ViewUtils.setTextViewText(holder.mMovieHumanNameTv, humanBean.name);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(mContext, MovieHumanDetailActivity.class);
+                intent.putExtra(ConstantValues.DOUBAN_MOVIE_HUMAN_ID,humanBean.id);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.liuhaoyuan.simplereader.model;
 import com.example.liuhaoyuan.simplereader.api.ApiEngine;
 import com.example.liuhaoyuan.simplereader.api.DouBanApiService;
 import com.example.liuhaoyuan.simplereader.bean.MovieDetailBean;
+import com.example.liuhaoyuan.simplereader.bean.MovieHumanDetailBean;
 import com.example.liuhaoyuan.simplereader.bean.MovieListBean;
 import com.example.liuhaoyuan.simplereader.movie.MovieContract;
 
@@ -50,5 +51,10 @@ public class MovieModel implements MovieContract.Model{
     @Override
     public Observable<MovieListBean> getMovieByTag(String tag, String start, String count) {
         return ApiEngine.getInstance().getDouBanApiService().getMovieByTag(tag, start, count);
+    }
+
+    @Override
+    public Observable<MovieHumanDetailBean> getHumanDetail(String id) {
+        return ApiEngine.getInstance().getDouBanApiService().getMovieHumanDetail(id);
     }
 }

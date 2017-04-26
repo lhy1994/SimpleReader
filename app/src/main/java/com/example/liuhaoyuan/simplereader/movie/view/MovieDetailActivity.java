@@ -27,6 +27,7 @@ import com.example.liuhaoyuan.simplereader.util.ViewUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MovieDetailActivity extends BaseActivity<MovieContract.MovieDetailPresenter> implements MovieContract.MovieDetailView {
 
@@ -56,6 +57,9 @@ public class MovieDetailActivity extends BaseActivity<MovieContract.MovieDetailP
     RecyclerView mMovieDirectorsList;
     @BindView(R.id.lv_movie_casts)
     RecyclerView mMovieCastsList;
+    @BindView(R.id.btn_more_summary)
+    TextView mMoreSummaryBtn;
+    private boolean mOpenSummary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +83,10 @@ public class MovieDetailActivity extends BaseActivity<MovieContract.MovieDetailP
         ViewUtils.setTextViewText(mTitleTv, bean.title);
         if (bean.rating != null) {
             ViewUtils.setTextViewText(mRatingTv, String.valueOf(bean.rating.average));
-            mRatingBar.setMax(bean.rating.max);
-            mRatingBar.setRating((float) bean.rating.average);
+            mRatingBar.setMax(bean.rating.max/2);
+            mRatingBar.setRating((float) bean.rating.average/2);
         }
-        ViewUtils.setTextViewText(mRatingCountTv, String.valueOf(bean.ratings_count), "评分");
+        ViewUtils.setTextViewText(mRatingCountTv, String.valueOf(bean.ratings_count), "人评价");
         StringBuilder builder = new StringBuilder();
         for (String country : bean.countries) {
             builder.append(country).append(" ");
@@ -112,6 +116,12 @@ public class MovieDetailActivity extends BaseActivity<MovieContract.MovieDetailP
             mGenre.setVisibility(View.GONE);
         }
         ViewUtils.setTextViewText(mSummaryTv,bean.summary);
+        if (mSummaryTv.getLineCount()<4){
+            mMoreSummaryBtn.setVisibility(View.GONE);
+        }else {
+            mOpenSummary = false;
+            ViewUtils.setTextViewText(mMoreSummaryBtn,"更多");
+        }
 
         RecyclerView.LayoutManager directorsManager=new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
         MovieHumanAdapter directorAdapter=new MovieHumanAdapter(this,bean.directors);
@@ -122,5 +132,19 @@ public class MovieDetailActivity extends BaseActivity<MovieContract.MovieDetailP
         MovieHumanAdapter castAdapter=new MovieHumanAdapter(this,bean.casts);
         mMovieCastsList.setLayoutManager(castsManager);
         mMovieCastsList.setAdapter(castAdapter);
+    }
+
+    @OnClick(R.id.btn_more_summary)
+    public void toggleSummary(){
+        if (mOpenSummary){
+            mSummaryTv.setLines(4);
+            mSummaryTv.setEllipsize(TextUtils.TruncateAt.END);
+            ViewUtils.setTextViewText(mMoreSummaryBtn,"更多");
+        }else {
+            mSummaryTv.setSingleLine(false);
+            mSummaryTv.setEllipsize(null);
+            ViewUtils.setTextViewText(mMoreSummaryBtn,"收起");
+        }
+        mOpenSummary=!mOpenSummary;
     }
 }

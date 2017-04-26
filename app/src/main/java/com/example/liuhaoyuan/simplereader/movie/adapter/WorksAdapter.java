@@ -12,10 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
-import com.example.liuhaoyuan.simplereader.base.BaseListAdapter;
-import com.example.liuhaoyuan.simplereader.bean.ImagesBean;
-import com.example.liuhaoyuan.simplereader.bean.MovieItemBean;
-import com.example.liuhaoyuan.simplereader.bean.MovieListBean;
+import com.example.liuhaoyuan.simplereader.bean.MovieHumanDetailBean;
 import com.example.liuhaoyuan.simplereader.movie.view.MovieDetailActivity;
 import com.example.liuhaoyuan.simplereader.util.DataUtils;
 import com.example.liuhaoyuan.simplereader.util.ViewUtils;
@@ -26,33 +23,40 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by liuhaoyuan on 17/4/25.
+ * Created by liuhaoyuan on 2017/4/26.
  */
 
-public class MovieListAdapter extends BaseListAdapter<List<MovieItemBean>, MovieListAdapter.MovieListHolder> {
+public class WorksAdapter extends RecyclerView.Adapter<WorksAdapter.WorksHolder> {
     private Context mContext;
+    private List<MovieHumanDetailBean.WorksBean> mData;
 
-    public MovieListAdapter(Context context, List<MovieItemBean> data) {
+    public WorksAdapter(Context context, List<MovieHumanDetailBean.WorksBean> data) {
         this.mContext = context;
         this.mData = data;
     }
 
     @Override
-    public MovieListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie_list, parent, false);
-        return new MovieListHolder(view);
+    public WorksHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_works_list, parent, false);
+        return new WorksHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MovieListHolder holder, final int position) {
-        String imageUrl = DataUtils.getImageUrl(mData.get(position).images);
+    public void onBindViewHolder(WorksHolder holder, int position) {
+        final MovieHumanDetailBean.WorksBean worksBean = mData.get(position);
+        String imageUrl = DataUtils.getImageUrl(worksBean.subject.images);
         Glide.with(mContext).load(imageUrl).into(holder.mPosterIv);
-        ViewUtils.setTextViewText(holder.mTitleTv, mData.get(position).title);
+        ViewUtils.setTextViewText(holder.mTitleTv,worksBean.subject.title);
+        StringBuilder builder=new StringBuilder();
+        for (String role : worksBean.roles) {
+            builder.append(role).append(" ");
+        }
+        ViewUtils.setTextViewText(holder.mRolesTv,builder.toString());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(mContext,MovieDetailActivity.class);
-                intent.putExtra(ConstantValues.DOUBAN_MOVIE_ID,mData.get(position).id);
+                Intent intent=new Intent(mContext, MovieDetailActivity.class);
+                intent.putExtra(ConstantValues.DOUBAN_MOVIE_ID,worksBean.subject.id);
                 mContext.startActivity(intent);
             }
         });
@@ -63,14 +67,16 @@ public class MovieListAdapter extends BaseListAdapter<List<MovieItemBean>, Movie
         return mData.size();
     }
 
-    public static class MovieListHolder extends RecyclerView.ViewHolder {
+    public static class WorksHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.iv_poster)
         ImageView mPosterIv;
         @BindView(R.id.tv_title)
         TextView mTitleTv;
+        @BindView(R.id.tv_roles)
+        TextView mRolesTv;
 
-        public MovieListHolder(View itemView) {
+        public WorksHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

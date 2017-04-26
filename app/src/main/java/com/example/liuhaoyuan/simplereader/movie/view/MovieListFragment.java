@@ -7,18 +7,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.liuhaoyuan.simplereader.ConstantValues;
-import com.example.liuhaoyuan.simplereader.base.BaseListAdapter;
+import com.example.liuhaoyuan.simplereader.adapter.BaseListAdapter;
 import com.example.liuhaoyuan.simplereader.base.BaseListFragment;
 import com.example.liuhaoyuan.simplereader.bean.BaseListBean;
 import com.example.liuhaoyuan.simplereader.bean.MovieItemBean;
 import com.example.liuhaoyuan.simplereader.bean.MovieListBean;
 import com.example.liuhaoyuan.simplereader.movie.MovieContract;
-import com.example.liuhaoyuan.simplereader.movie.adapter.MovieListAdapter;
+import com.example.liuhaoyuan.simplereader.adapter.movie.MovieListAdapter;
 import com.example.liuhaoyuan.simplereader.movie.presenter.MovieListPresenter;
-import com.example.liuhaoyuan.simplereader.util.DataUtils;
 
 import java.util.List;
 

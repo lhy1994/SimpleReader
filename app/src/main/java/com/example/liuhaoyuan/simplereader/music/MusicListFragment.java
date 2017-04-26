@@ -9,7 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.liuhaoyuan.simplereader.ConstantValues;
-import com.example.liuhaoyuan.simplereader.base.BaseListAdapter;
+import com.example.liuhaoyuan.simplereader.adapter.BaseListAdapter;
+import com.example.liuhaoyuan.simplereader.adapter.music.MusicListAdapter;
 import com.example.liuhaoyuan.simplereader.base.BaseListFragment;
 import com.example.liuhaoyuan.simplereader.bean.BaseListBean;
 import com.example.liuhaoyuan.simplereader.bean.MusicListBean;

@@ -3,7 +3,6 @@ package com.example.liuhaoyuan.simplereader.music;
 import com.example.liuhaoyuan.simplereader.base.BaseListView;
 import com.example.liuhaoyuan.simplereader.base.BaseModel;
 import com.example.liuhaoyuan.simplereader.base.BasePresenter;
-import com.example.liuhaoyuan.simplereader.base.BaseView;
 import com.example.liuhaoyuan.simplereader.bean.MusicListBean;
 
 import io.reactivex.Observable;

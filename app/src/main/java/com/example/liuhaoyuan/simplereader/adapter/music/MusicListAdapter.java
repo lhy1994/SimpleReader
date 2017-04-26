@@ -1,4 +1,4 @@
-package com.example.liuhaoyuan.simplereader.music;
+package com.example.liuhaoyuan.simplereader.adapter.music;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,9 +10,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.liuhaoyuan.simplereader.R;
-import com.example.liuhaoyuan.simplereader.base.BaseListAdapter;
+import com.example.liuhaoyuan.simplereader.adapter.BaseListAdapter;
 import com.example.liuhaoyuan.simplereader.bean.MusicItemBean;
-import com.example.liuhaoyuan.simplereader.bean.MusicListBean;
 import com.example.liuhaoyuan.simplereader.util.ViewUtils;
 
 import java.util.List;

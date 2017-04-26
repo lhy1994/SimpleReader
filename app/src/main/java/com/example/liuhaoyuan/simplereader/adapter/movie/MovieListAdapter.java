@@ -1,4 +1,4 @@
-package com.example.liuhaoyuan.simplereader.movie.adapter;
+package com.example.liuhaoyuan.simplereader.adapter.movie;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,10 +12,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
-import com.example.liuhaoyuan.simplereader.base.BaseListAdapter;
-import com.example.liuhaoyuan.simplereader.bean.ImagesBean;
+import com.example.liuhaoyuan.simplereader.adapter.BaseListAdapter;
 import com.example.liuhaoyuan.simplereader.bean.MovieItemBean;
-import com.example.liuhaoyuan.simplereader.bean.MovieListBean;
 import com.example.liuhaoyuan.simplereader.movie.view.MovieDetailActivity;
 import com.example.liuhaoyuan.simplereader.util.DataUtils;
 import com.example.liuhaoyuan.simplereader.util.ViewUtils;

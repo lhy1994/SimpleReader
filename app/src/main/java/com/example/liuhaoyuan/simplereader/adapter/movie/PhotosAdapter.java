@@ -1,4 +1,4 @@
-package com.example.liuhaoyuan.simplereader.movie.adapter;
+package com.example.liuhaoyuan.simplereader.adapter.movie;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

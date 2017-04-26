@@ -1,4 +1,4 @@
-package com.example.liuhaoyuan.simplereader.base;
+package com.example.liuhaoyuan.simplereader.adapter;
 
 import android.support.v7.widget.RecyclerView;
 

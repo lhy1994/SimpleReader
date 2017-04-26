@@ -34,4 +34,12 @@
         <item>摇滚</item>
         <item>民谣</item>
     </string-array>
+    <string-array name="douban_book_category">
+        <item>小说</item>
+        <item>名著</item>
+        <item>科幻</item>
+        <item>历史</item>
+        <item>爱情</item>
+        <item>编程</item>
+    </string-array>
 </resources>

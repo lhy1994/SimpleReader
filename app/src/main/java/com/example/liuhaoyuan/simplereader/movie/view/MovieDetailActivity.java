@@ -21,7 +21,7 @@ import com.example.liuhaoyuan.simplereader.base.BaseActivity;
 import com.example.liuhaoyuan.simplereader.bean.MovieDetailBean;
 import com.example.liuhaoyuan.simplereader.movie.MovieContract;
 import com.example.liuhaoyuan.simplereader.movie.presenter.MovieDetailPresenter;
-import com.example.liuhaoyuan.simplereader.movie.adapter.MovieHumanAdapter;
+import com.example.liuhaoyuan.simplereader.adapter.movie.MovieHumanAdapter;
 import com.example.liuhaoyuan.simplereader.util.DataUtils;
 import com.example.liuhaoyuan.simplereader.util.ViewUtils;
 

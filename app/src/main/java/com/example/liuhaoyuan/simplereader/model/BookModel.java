@@ -14,7 +14,7 @@ import io.reactivex.Observable;
 public class BookModel implements BookContract.Model {
     @Override
     public Observable<BookListBean> getBookByTag(String tag,String start,String count){
-        return ApiEngine.getInstance().getDouBanApiService().getBookBytag(tag,start,count);
+        return ApiEngine.getInstance().getDouBanApiService().getBookByTag(tag,start,count);
     }
     @Override
     public Observable<BookItemBean> getBookDetail(String id){

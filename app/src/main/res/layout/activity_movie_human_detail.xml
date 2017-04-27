@@ -13,9 +13,9 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="snap|scroll"
-            android:fitsSystemWindows="true"
             app:title="">
 
             <ImageView
@@ -66,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="3dp"
                 android:paddingLeft="20dp"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="14sp" />
 
             <TextView
@@ -75,15 +76,16 @@
                 android:paddingBottom="5dp"
                 android:paddingLeft="20dp"
                 android:paddingTop="3dp"
-                />
+                android:textColor="?android:attr/textColorPrimary" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="15dp"
                 android:layout_marginBottom="5dp"
-                android:background="@android:color/darker_gray"/>
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/darker_gray" />
 
 
             <TextView
@@ -112,20 +114,20 @@
                 android:id="@+id/lv_works"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
             <TextView
+                android:id="@+id/tv_photos"
                 style="@style/SubTitle"
-                android:text="人物照片"
-                android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:paddingLeft="20dp"
-                android:id="@+id/tv_photos"
-                />
+                android:paddingTop="5dp"
+                android:text="人物照片" />
 
             <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
                 android:id="@+id/lv_photos"
-                android:padding="5dp"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

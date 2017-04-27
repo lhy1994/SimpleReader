@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,9 +14,6 @@ import android.view.ViewGroup;
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
 import com.example.liuhaoyuan.simplereader.adapter.CommenPagerAdapter;
-import com.example.liuhaoyuan.simplereader.base.BaseFragment;
-import com.example.liuhaoyuan.simplereader.movie.view.MovieListFragment;
-import com.example.liuhaoyuan.simplereader.movie.view.MovieRankListFragment;
 
 import java.util.ArrayList;
 import java.util.List;

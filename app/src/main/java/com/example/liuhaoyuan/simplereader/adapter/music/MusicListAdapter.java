@@ -1,6 +1,7 @@
 package com.example.liuhaoyuan.simplereader.adapter.music;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
 import com.example.liuhaoyuan.simplereader.adapter.BaseListAdapter;
 import com.example.liuhaoyuan.simplereader.bean.MusicItemBean;
+import com.example.liuhaoyuan.simplereader.music.MusicDetailActivity;
 import com.example.liuhaoyuan.simplereader.util.ViewUtils;
 
 import java.util.List;
@@ -39,7 +42,7 @@ public class MusicListAdapter extends BaseListAdapter<List<MusicItemBean>, Music
 
     @Override
     public void onBindViewHolder(MusicListHolder holder, int position) {
-        MusicItemBean bean = mData.get(position);
+        final MusicItemBean bean = mData.get(position);
         Glide.with(mContext).load(bean.image).into(holder.mPosterIv);
         ViewUtils.setTextViewText(holder.mTitleTv, bean.title);
         StringBuilder builder = new StringBuilder();
@@ -47,6 +50,14 @@ public class MusicListAdapter extends BaseListAdapter<List<MusicItemBean>, Music
             builder.append(s).append(" ");
         }
         ViewUtils.setTextViewText(holder.mSingerTv, builder.toString());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(mContext, MusicDetailActivity.class);
+                intent.putExtra(ConstantValues.DOUBAN_MUSIC_ID,bean.id);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

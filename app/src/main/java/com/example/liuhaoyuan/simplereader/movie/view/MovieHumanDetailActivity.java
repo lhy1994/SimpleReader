@@ -53,12 +53,10 @@ public class MovieHumanDetailActivity extends BaseActivity<MovieContract.HumanPr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_human_detail);
         ButterKnife.bind(this);
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         String id = getIntent().getStringExtra(ConstantValues.DOUBAN_MOVIE_HUMAN_ID);
         mPresenter.getHumanDetail(id);
-        mPresenter.getHumanSummary(id);
-        mPresenter.getHumanPhotos(id);
     }
 
     @Override
@@ -67,37 +65,55 @@ public class MovieHumanDetailActivity extends BaseActivity<MovieContract.HumanPr
     }
 
     @Override
-    public void initUi(MovieHumanDetailBean bean) {
-        String imageUrl = DataUtils.getImageUrl(bean.avatars);
+    public void setHumanPoster(String imageUrl) {
         Glide.with(this).load(imageUrl).into(mMovieHumanIv);
-        ViewUtils.setTextViewText(mNameTv,bean.name);
-        ViewUtils.setTextViewText(mNameEnTv,bean.name_en);
-        ViewUtils.setTextViewText(mGenderTv,"性别：",bean.gender);
-        ViewUtils.setTextViewText(mBornPlaceTv,"出生地：",bean.born_place);
+    }
 
-        WorksAdapter adapter=new WorksAdapter(this,bean.works);
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
+    @Override
+    public void setName(String name) {
+        ViewUtils.setTextViewText(mNameTv, name);
+    }
+
+    @Override
+    public void setNameEn(String nameEn) {
+        ViewUtils.setTextViewText(mNameEnTv, nameEn);
+    }
+
+    @Override
+    public void setGender(String gender) {
+        ViewUtils.setTextViewText(mGenderTv, "性别：", gender);
+    }
+
+    @Override
+    public void setBornPlace(String bornPlace) {
+        ViewUtils.setTextViewText(mBornPlaceTv, "出生地：", bornPlace);
+    }
+
+    @Override
+    public void setWorks(List<MovieHumanDetailBean.WorksBean> works) {
+        WorksAdapter adapter = new WorksAdapter(this, works);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mWorksList.setLayoutManager(layoutManager);
         mWorksList.setAdapter(adapter);
     }
 
     @Override
-    public void updateHumanSummary(String summary) {
-        if (!TextUtils.isEmpty(summary)){
+    public void setHumanSummary(String summary) {
+        if (!TextUtils.isEmpty(summary)) {
             mSummaryTv.setText(summary);
-        }else {
+        } else {
             mSummaryTv.setText("暂时没有简介");
         }
     }
 
     @Override
-    public void updateHumanPhotos(List<String> photos) {
-        if (DataUtils.isEmptyList(photos)){
+    public void setHumanPhotos(List<String> photos) {
+        if (DataUtils.isEmptyList(photos)) {
             mPhotosTV.setVisibility(View.GONE);
             mPhotosList.setVisibility(View.GONE);
-        }else {
-            PhotosAdapter adapter=new PhotosAdapter(this,photos);
-            RecyclerView.LayoutManager layoutManager=new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+        } else {
+            PhotosAdapter adapter = new PhotosAdapter(this, photos);
+            RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
             mPhotosList.setLayoutManager(layoutManager);
             mPhotosList.setAdapter(adapter);
         }

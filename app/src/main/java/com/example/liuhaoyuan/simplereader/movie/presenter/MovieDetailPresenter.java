@@ -3,6 +3,7 @@ package com.example.liuhaoyuan.simplereader.movie.presenter;
 import com.example.liuhaoyuan.simplereader.bean.MovieDetailBean;
 import com.example.liuhaoyuan.simplereader.movie.MovieContract;
 import com.example.liuhaoyuan.simplereader.model.MovieModel;
+import com.example.liuhaoyuan.simplereader.util.DataUtils;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -28,7 +29,17 @@ public class MovieDetailPresenter extends MovieContract.MovieDetailPresenter {
                 .subscribe(new Consumer<MovieDetailBean>() {
                     @Override
                     public void accept(@NonNull MovieDetailBean bean) throws Exception {
-                        mView.initUi(bean);
+                        String imageUrl = DataUtils.getImageUrl(bean.images);
+                        mView.setPoster(imageUrl);
+                        mView.setTitle(bean.title);
+                        mView.setRating((float) bean.rating.average,bean.rating.max);
+                        mView.setRatingCount(bean.ratings_count);
+                        mView.setCountry(bean.countries);
+                        mView.setYear(bean.year);
+                        mView.setGenre(bean.genres);
+                        mView.setSummary(bean.summary);
+                        mView.setDirectors(bean.directors);
+                        mView.setCasts(bean.casts);
                     }
                 });
         addDisposable(disposable);

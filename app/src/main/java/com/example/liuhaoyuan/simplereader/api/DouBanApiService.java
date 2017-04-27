@@ -5,6 +5,7 @@ import com.example.liuhaoyuan.simplereader.bean.BookListBean;
 import com.example.liuhaoyuan.simplereader.bean.MovieDetailBean;
 import com.example.liuhaoyuan.simplereader.bean.MovieHumanDetailBean;
 import com.example.liuhaoyuan.simplereader.bean.MovieListBean;
+import com.example.liuhaoyuan.simplereader.bean.MusicItemBean;
 import com.example.liuhaoyuan.simplereader.bean.MusicListBean;
 
 import java.util.Map;
@@ -58,8 +59,11 @@ public interface DouBanApiService {
     @GET("v2/music/search")
     Observable<MusicListBean> getMusicByKey(@Query("q") String key, @Query("start") String start, @Query("count") String count);
 
+    @GET("v2/music/{id}")
+    Observable<MusicItemBean> getMusicDetail(@Path("id") String id);
+
     @GET("v2/book/search")
-    Observable<BookListBean> getBookBytag(@Query("tag") String tag, @Query("start") String start, @Query("count") String count);
+    Observable<BookListBean> getBookByTag(@Query("tag") String tag, @Query("start") String start, @Query("count") String count);
 
     @GET("v2/book/{id}")
     Observable<BookItemBean> getBookDetail(@Path("id") String id);

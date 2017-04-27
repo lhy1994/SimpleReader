@@ -19,11 +19,14 @@ import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
 import com.example.liuhaoyuan.simplereader.base.BaseActivity;
 import com.example.liuhaoyuan.simplereader.bean.MovieDetailBean;
+import com.example.liuhaoyuan.simplereader.bean.MovieHumanBean;
 import com.example.liuhaoyuan.simplereader.movie.MovieContract;
 import com.example.liuhaoyuan.simplereader.movie.presenter.MovieDetailPresenter;
 import com.example.liuhaoyuan.simplereader.adapter.movie.MovieHumanAdapter;
 import com.example.liuhaoyuan.simplereader.util.DataUtils;
 import com.example.liuhaoyuan.simplereader.util.ViewUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,29 +77,61 @@ public class MovieDetailActivity extends BaseActivity<MovieContract.MovieDetailP
         return new MovieDetailPresenter(this);
     }
 
+    @OnClick(R.id.btn_more_summary)
+    public void toggleSummary() {
+        if (mOpenSummary) {
+            mSummaryTv.setLines(4);
+            mSummaryTv.setEllipsize(TextUtils.TruncateAt.END);
+            ViewUtils.setTextViewText(mMoreSummaryBtn, "更多");
+        } else {
+            mSummaryTv.setSingleLine(false);
+            mSummaryTv.setEllipsize(null);
+            ViewUtils.setTextViewText(mMoreSummaryBtn, "收起");
+        }
+        mOpenSummary = !mOpenSummary;
+    }
+
     @Override
-    public void initUi(MovieDetailBean bean) {
-        String imageUrl = DataUtils.getImageUrl(bean.images);
-        if (!TextUtils.isEmpty(imageUrl)) {
-            Glide.with(this).load(imageUrl).into(mPosterIv);
-        }
-        ViewUtils.setTextViewText(mTitleTv, bean.title);
-        if (bean.rating != null) {
-            ViewUtils.setTextViewText(mRatingTv, String.valueOf(bean.rating.average));
-            mRatingBar.setMax(bean.rating.max/2);
-            mRatingBar.setRating((float) bean.rating.average/2);
-        }
-        ViewUtils.setTextViewText(mRatingCountTv, String.valueOf(bean.ratings_count), "人评价");
+    public void setPoster(String imageUrl) {
+        Glide.with(this).load(imageUrl).into(mPosterIv);
+    }
+
+    @Override
+    public void setTitle(String title) {
+        ViewUtils.setTextViewText(mTitleTv, title);
+    }
+
+    @Override
+    public void setRating(float rating, int max) {
+        ViewUtils.setTextViewText(mRatingTv, String.valueOf(rating));
+        mRatingBar.setMax(max / 2);
+        mRatingBar.setRating(rating / 2);
+    }
+
+    @Override
+    public void setRatingCount(int ratingCount) {
+        ViewUtils.setTextViewText(mRatingCountTv, String.valueOf(ratingCount), "人评价");
+    }
+
+    @Override
+    public void setCountry(List<String> countries) {
         StringBuilder builder = new StringBuilder();
-        for (String country : bean.countries) {
+        for (String country : countries) {
             builder.append(country).append(" ");
         }
         ViewUtils.setTextViewText(mCountryTv, builder.toString());
-        ViewUtils.setTextViewText(mYearTv, bean.year);
+    }
 
-        if (!DataUtils.isEmptyList(bean.genres)) {
+    @Override
+    public void setYear(String year) {
+        ViewUtils.setTextViewText(mYearTv, year);
+    }
+
+    @Override
+    public void setGenre(List<String> genres) {
+        if (!DataUtils.isEmptyList(genres)) {
             mGenre.removeAllViews();
-            for (String genre : bean.genres) {
+            for (String genre : genres) {
                 TextView textView = new TextView(this);
                 ViewUtils.setTextViewText(textView, genre);
                 textView.setBackgroundResource(R.drawable.bg_genre);
@@ -115,36 +150,35 @@ public class MovieDetailActivity extends BaseActivity<MovieContract.MovieDetailP
         } else {
             mGenre.setVisibility(View.GONE);
         }
-        ViewUtils.setTextViewText(mSummaryTv,bean.summary);
-        if (mSummaryTv.getLineCount()<4){
-            mMoreSummaryBtn.setVisibility(View.GONE);
-        }else {
-            mOpenSummary = false;
-            ViewUtils.setTextViewText(mMoreSummaryBtn,"更多");
-        }
-
-        RecyclerView.LayoutManager directorsManager=new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
-        MovieHumanAdapter directorAdapter=new MovieHumanAdapter(this,bean.directors);
-        mMovieDirectorsList.setLayoutManager(directorsManager);
-        mMovieDirectorsList.setAdapter(directorAdapter);
-
-        RecyclerView.LayoutManager castsManager=new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
-        MovieHumanAdapter castAdapter=new MovieHumanAdapter(this,bean.casts);
-        mMovieCastsList.setLayoutManager(castsManager);
-        mMovieCastsList.setAdapter(castAdapter);
     }
 
-    @OnClick(R.id.btn_more_summary)
-    public void toggleSummary(){
-        if (mOpenSummary){
+    @Override
+    public void setSummary(String summary) {
+        ViewUtils.setTextViewText(mSummaryTv, summary);
+        if (mSummaryTv.getLineCount() < 4) {
+            mMoreSummaryBtn.setVisibility(View.GONE);
+        } else {
+            mOpenSummary = false;
+            mMoreSummaryBtn.setVisibility(View.VISIBLE);
             mSummaryTv.setLines(4);
             mSummaryTv.setEllipsize(TextUtils.TruncateAt.END);
-            ViewUtils.setTextViewText(mMoreSummaryBtn,"更多");
-        }else {
-            mSummaryTv.setSingleLine(false);
-            mSummaryTv.setEllipsize(null);
-            ViewUtils.setTextViewText(mMoreSummaryBtn,"收起");
+            ViewUtils.setTextViewText(mMoreSummaryBtn, "更多");
         }
-        mOpenSummary=!mOpenSummary;
+    }
+
+    @Override
+    public void setDirectors(List<MovieHumanBean> directors) {
+        RecyclerView.LayoutManager directorsManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        MovieHumanAdapter directorAdapter = new MovieHumanAdapter(this, directors);
+        mMovieDirectorsList.setLayoutManager(directorsManager);
+        mMovieDirectorsList.setAdapter(directorAdapter);
+    }
+
+    @Override
+    public void setCasts(List<MovieHumanBean> casts) {
+        RecyclerView.LayoutManager castsManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        MovieHumanAdapter castAdapter = new MovieHumanAdapter(this, casts);
+        mMovieCastsList.setLayoutManager(castsManager);
+        mMovieCastsList.setAdapter(castAdapter);
     }
 }

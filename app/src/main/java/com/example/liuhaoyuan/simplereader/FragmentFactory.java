@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.util.SparseArray;
 
 import com.example.liuhaoyuan.simplereader.book.BookFragment;
-import com.example.liuhaoyuan.simplereader.me.MeFragment;
 import com.example.liuhaoyuan.simplereader.movie.MovieFragment;
 import com.example.liuhaoyuan.simplereader.movie.MovieRankFragment;
 import com.example.liuhaoyuan.simplereader.music.MusicFragment;

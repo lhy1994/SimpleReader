@@ -14,30 +14,65 @@ import com.example.liuhaoyuan.simplereader.adapter.music.MusicListAdapter;
 import com.example.liuhaoyuan.simplereader.base.BaseListFragment;
 import com.example.liuhaoyuan.simplereader.bean.BaseListBean;
 import com.example.liuhaoyuan.simplereader.bean.MusicListBean;
+import com.example.liuhaoyuan.simplereader.model.MusicModel;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by liuhaoyuan on 2017/4/26.
  */
 
-public class MusicListFragment extends BaseListFragment<MusicContract.ListPresenter> implements MusicContract.ListView {
+public class MusicListFragment extends BaseListFragment {
 
     private String mCategory;
+    private MusicModel mModel;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mCategory = getArguments().getString(ConstantValues.DOUBAN_MUSIC_CATEGORY);
+        mModel = new MusicModel();
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    public void getMusicList(String start, String count, final boolean loadMore) {
+        Disposable disposable = mModel.getMusicList(mCategory, start, count)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<MusicListBean>() {
+                    @Override
+                    public void accept(@NonNull MusicListBean musicListBean) throws Exception {
+                        if (!loadMore) {
+                            updateList(musicListBean);
+                        } else {
+                            addMoreListData(musicListBean);
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        if (!loadMore) {
+                            showErrorView();
+                        } else {
+                            addMoreListData(null);
+                        }
+                    }
+                });
+        addDisposable(disposable);
     }
 
     @Override
     protected void loadData() {
-        mPresenter.getMusicList(mCategory, "0", "20", false);
+        getMusicList("0", "20", false);
     }
 
     @Override
     protected void loadMoreData(int start) {
-        mPresenter.getMusicList(mCategory, String.valueOf(start), "20", true);
+        getMusicList(String.valueOf(start), "20", true);
     }
 
     @Override
@@ -48,21 +83,18 @@ public class MusicListFragment extends BaseListFragment<MusicContract.ListPresen
 
     @Override
     protected RecyclerView.LayoutManager onCreateLayoutManager() {
-        return new GridLayoutManager(getContext(),2);
+        return new GridLayoutManager(getContext(), 2);
     }
 
     @Override
     protected void setAdapterData(BaseListBean bean, boolean append) {
-        MusicListBean data= (MusicListBean) bean;
-        if (append){
-            mAdapter.addMoreData(data.musics);
-        }else {
-            mAdapter.setData(data.musics);
+        if (bean instanceof MusicListBean) {
+            MusicListBean data = (MusicListBean) bean;
+            if (append) {
+                mAdapter.addMoreData(data.musics);
+            } else {
+                mAdapter.setData(data.musics);
+            }
         }
-    }
-
-    @Override
-    protected MusicContract.ListPresenter onCreatePresenter() {
-        return new MusicListPresenter(this);
     }
 }

@@ -2,6 +2,7 @@ package com.example.liuhaoyuan.simplereader.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +20,15 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by liuhaoyuan on 2017/4/25.
  */
 
-public abstract class BaseListFragment<P extends BasePresenter> extends BaseFragment<P>
-        implements BaseListView, XRecyclerView.LoadingListener {
+public abstract class BaseListFragment extends Fragment
+        implements XRecyclerView.LoadingListener {
 
     @BindView(R.id.list)
     protected XRecyclerView mListView;
@@ -37,6 +40,7 @@ public abstract class BaseListFragment<P extends BasePresenter> extends BaseFrag
     protected int mCurrentCount;
     protected BaseListAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
+    protected CompositeDisposable mCompositeDisposable;
 
     @Nullable
     @Override
@@ -61,7 +65,6 @@ public abstract class BaseListFragment<P extends BasePresenter> extends BaseFrag
 
     protected abstract void loadMoreData(int start);
 
-    @Override
     public void updateList(BaseListBean bean) {
         hideLoadingView();
         hideErrorView();
@@ -74,12 +77,11 @@ public abstract class BaseListFragment<P extends BasePresenter> extends BaseFrag
             mListView.setLayoutManager(mLayoutManager);
             mListView.setAdapter(mAdapter);
         } else {
-            setAdapterData(bean,false);
+            setAdapterData(bean, false);
             mListView.refreshComplete();
         }
     }
 
-    @Override
     public void addMoreListData(BaseListBean bean) {
         if (bean == null) {
             mListView.loadMoreComplete();
@@ -97,42 +99,34 @@ public abstract class BaseListFragment<P extends BasePresenter> extends BaseFrag
 
     protected abstract void setAdapterData(BaseListBean bean, boolean append);
 
-
-    @Override
-    protected abstract P onCreatePresenter();
-
-    @Override
     public void showLoadingView() {
         mLoadingView.setVisibility(View.VISIBLE);
         mListView.setVisibility(View.GONE);
         mErrorView.setVisibility(View.GONE);
     }
 
-    @Override
     public void hideLoadingView() {
         mLoadingView.setVisibility(View.GONE);
     }
 
-    @Override
     public void showErrorView() {
         mErrorView.setVisibility(View.VISIBLE);
         mListView.setVisibility(View.GONE);
         mLoadingView.setVisibility(View.GONE);
     }
 
-    @Override
     public void hideErrorView() {
         mErrorView.setVisibility(View.GONE);
     }
 
     @Override
-    public  void onRefresh(){
-        mCurrentCount=0;
+    public void onRefresh() {
+        mCurrentCount = 0;
         loadData();
     }
 
     @Override
-    public  void onLoadMore(){
+    public void onLoadMore() {
         if (mCurrentCount < mTotal) {
             loadMoreData(mCurrentCount);
         } else {
@@ -142,8 +136,27 @@ public abstract class BaseListFragment<P extends BasePresenter> extends BaseFrag
     }
 
     @OnClick(R.id.btn_retry)
-    public void onRetryClick(){
+    public void onRetryClick() {
         showLoadingView();
         loadData();
+    }
+
+    protected void addDisposable(Disposable disposable){
+        if (mCompositeDisposable==null){
+            mCompositeDisposable=new CompositeDisposable();
+        }
+        mCompositeDisposable.add(disposable);
+    }
+
+    protected void clearDisposable(){
+        if (mCompositeDisposable!=null){
+            mCompositeDisposable.clear();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        clearDisposable();
+        super.onPause();
     }
 }

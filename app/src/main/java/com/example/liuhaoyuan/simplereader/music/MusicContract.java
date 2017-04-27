@@ -1,9 +1,12 @@
 package com.example.liuhaoyuan.simplereader.music;
 
-import com.example.liuhaoyuan.simplereader.base.BaseListView;
 import com.example.liuhaoyuan.simplereader.base.BaseModel;
 import com.example.liuhaoyuan.simplereader.base.BasePresenter;
+import com.example.liuhaoyuan.simplereader.base.BaseView;
+import com.example.liuhaoyuan.simplereader.bean.MusicItemBean;
 import com.example.liuhaoyuan.simplereader.bean.MusicListBean;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -14,13 +17,20 @@ import io.reactivex.Observable;
 public interface MusicContract {
     interface Model extends BaseModel{
         Observable<MusicListBean> getMusicList(String category,String start,String count);
+        Observable<MusicItemBean> getMusicDetail(String id);
     }
 
-    interface ListView extends BaseListView{
-
+    interface DetailView extends BaseView{
+        void setPoster(String imageUrl);
+        void setTitle(String title);
+        void setRating(float rating,int max);
+        void setRatingCount(int ratingCount);
+        void setSummary(String summary);
+        void setGenre(List<String> genre);
+        void setSongList(List<String> songList);
     }
-    abstract class ListPresenter extends BasePresenter<ListView,Model>{
-        public abstract void getMusicList(String category,String start,String count,boolean isMore);
-    }
 
+    abstract class DetailPresenter extends BasePresenter<DetailView,Model>{
+        public abstract void getMusicDetail(String id);
+    }
 }

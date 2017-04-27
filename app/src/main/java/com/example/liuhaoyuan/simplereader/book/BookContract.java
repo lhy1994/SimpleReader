@@ -1,6 +1,5 @@
 package com.example.liuhaoyuan.simplereader.book;
 
-import com.example.liuhaoyuan.simplereader.base.BaseListView;
 import com.example.liuhaoyuan.simplereader.base.BaseModel;
 import com.example.liuhaoyuan.simplereader.base.BasePresenter;
 import com.example.liuhaoyuan.simplereader.base.BaseView;
@@ -24,14 +23,6 @@ public interface BookContract {
         Observable<BookListBean> getSeriesBooks(String id);
     }
 
-    interface ListView extends BaseListView {
-
-    }
-
-    abstract class ListPresenter extends BasePresenter<ListView, Model> {
-        public abstract void getBookList(String category, String start, String count, boolean isMore);
-    }
-
     interface DetailView extends BaseView {
         void setPoster(String imageUrl);
 
@@ -43,7 +34,7 @@ public interface BookContract {
 
         void setAuthor(List<String> author);
 
-        void setPubDate(String pudate);
+        void setPubDate(String pubDate);
 
         void setPublisher(String publisher);
 

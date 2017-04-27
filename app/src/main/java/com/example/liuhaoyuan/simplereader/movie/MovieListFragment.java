@@ -1,6 +1,5 @@
-package com.example.liuhaoyuan.simplereader.book;
+package com.example.liuhaoyuan.simplereader.movie;
 
-import android.media.MediaDataSource;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,11 +10,14 @@ import android.view.ViewGroup;
 
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.adapter.BaseListAdapter;
-import com.example.liuhaoyuan.simplereader.adapter.book.BookListAdapter;
+import com.example.liuhaoyuan.simplereader.adapter.movie.MovieListAdapter;
 import com.example.liuhaoyuan.simplereader.base.BaseListFragment;
 import com.example.liuhaoyuan.simplereader.bean.BaseListBean;
-import com.example.liuhaoyuan.simplereader.bean.BookListBean;
-import com.example.liuhaoyuan.simplereader.model.BookModel;
+import com.example.liuhaoyuan.simplereader.bean.MovieItemBean;
+import com.example.liuhaoyuan.simplereader.bean.MovieListBean;
+import com.example.liuhaoyuan.simplereader.model.MovieModel;
+
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -24,42 +26,43 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Created by liuhaoyuan on 17/4/26.
+ * Created by liuhaoyuan on 17/4/25.
  */
 
-public class BookListFragment extends BaseListFragment{
+public class MovieListFragment extends BaseListFragment {
 
     private String mCategory;
-    private BookModel mModel;
+    private MovieModel mModel;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mCategory = getArguments().getString(ConstantValues.DOUBAN_BOOK_CATEGORY);
-        mModel = new BookModel();
+        mCategory = getArguments().getString(ConstantValues.DOUBAN_MOVIE_CATEGORY);
+        mModel = new MovieModel();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    public void getBookList(String start, String count, final boolean isMore) {
-        Disposable disposable = mModel.getBookByTag(mCategory, start, count)
+    protected void getMovieList(String start, String count, final boolean loadMore) {
+        Disposable disposable = mModel.getMovieByTag(mCategory, start, count)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<BookListBean>() {
+                .subscribe(new Consumer<MovieListBean>() {
                     @Override
-                    public void accept(@NonNull BookListBean bookListBean) throws Exception {
-                        if (isMore) {
-                            addMoreListData(bookListBean);
+                    public void accept(@NonNull MovieListBean bean) throws Exception {
+                        if (loadMore) {
+                            addMoreListData(bean);
                         } else {
-                            updateList(bookListBean);
+                            updateList(bean);
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
-                        if (isMore){
-                            addMoreListData(null);
-                        }else {
+                        throwable.printStackTrace();
+                        if (!loadMore) {
                             showErrorView();
+                        } else {
+                            addMoreListData(null);
                         }
                     }
                 });
@@ -68,33 +71,33 @@ public class BookListFragment extends BaseListFragment{
 
     @Override
     protected void loadData() {
-        getBookList("0", "20", false);
+        getMovieList("0", "20", false);
     }
 
     @Override
     protected void loadMoreData(int start) {
-        getBookList(String.valueOf(start), "20", true);
+        getMovieList(String.valueOf(start), "20", true);
     }
 
     @Override
-    protected BaseListAdapter onCreateAdapter(BaseListBean bean) {
-        BookListBean data = (BookListBean) bean;
-        return new BookListAdapter(getContext(), data.books);
+    protected BaseListAdapter<List<MovieItemBean>, MovieListAdapter.MovieListHolder> onCreateAdapter(BaseListBean bean) {
+        MovieListBean data = (MovieListBean) bean;
+        return new MovieListAdapter(getContext(), data.subjects);
     }
 
     @Override
     protected RecyclerView.LayoutManager onCreateLayoutManager() {
-        return new GridLayoutManager(getContext(),2);
+        return new GridLayoutManager(getContext(), 3);
     }
 
     @Override
     protected void setAdapterData(BaseListBean bean, boolean append) {
-        if (bean instanceof BookListBean){
-            BookListBean data= (BookListBean) bean;
-            if (append){
-                mAdapter.addMoreData(data.books);
-            }else {
-                mAdapter.addMoreData(data.books);
+        if (bean instanceof MovieListBean) {
+            MovieListBean data = (MovieListBean) bean;
+            if (append) {
+                mAdapter.addMoreData(data.subjects);
+            } else {
+                mAdapter.setData(data.subjects);
             }
         }
     }

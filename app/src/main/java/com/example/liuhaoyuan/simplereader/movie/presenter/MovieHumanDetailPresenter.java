@@ -4,6 +4,7 @@ import com.example.liuhaoyuan.simplereader.api.GetActor;
 import com.example.liuhaoyuan.simplereader.bean.MovieHumanDetailBean;
 import com.example.liuhaoyuan.simplereader.model.MovieModel;
 import com.example.liuhaoyuan.simplereader.movie.MovieContract;
+import com.example.liuhaoyuan.simplereader.util.DataUtils;
 
 import java.util.List;
 
@@ -34,7 +35,15 @@ public class MovieHumanDetailPresenter extends MovieContract.HumanPresenter {
                 .subscribe(new Consumer<MovieHumanDetailBean>() {
                     @Override
                     public void accept(@NonNull MovieHumanDetailBean bean) throws Exception {
-                        mView.initUi(bean);
+                        String imageUrl = DataUtils.getImageUrl(bean.avatars);
+                        mView.setHumanPoster(imageUrl);
+                        mView.setName(bean.name);
+                        mView.setNameEn(bean.name_en);
+                        mView.setGender(bean.gender);
+                        mView.setBornPlace(bean.born_place);
+                        mView.setWorks(bean.works);
+                        getHumanSummary(bean.id);
+                        getHumanPhotos(bean.id);
                     }
                 });
         addDisposable(disposable);
@@ -56,7 +65,7 @@ public class MovieHumanDetailPresenter extends MovieContract.HumanPresenter {
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(@NonNull String s) throws Exception {
-                        mView.updateHumanSummary(s);
+                        mView.setHumanSummary(s);
                     }
                 });
         addDisposable(disposable);
@@ -78,7 +87,7 @@ public class MovieHumanDetailPresenter extends MovieContract.HumanPresenter {
                 .subscribe(new Consumer<List<String>>() {
                     @Override
                     public void accept(@NonNull List<String> strings) throws Exception {
-                        mView.updateHumanPhotos(strings);
+                        mView.setHumanPhotos(strings);
                     }
                 });
         addDisposable(disposable);

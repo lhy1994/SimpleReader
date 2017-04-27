@@ -1,11 +1,10 @@
 package com.example.liuhaoyuan.simplereader.movie;
 
-import com.example.liuhaoyuan.simplereader.base.BaseActivity;
-import com.example.liuhaoyuan.simplereader.base.BaseListView;
 import com.example.liuhaoyuan.simplereader.base.BaseModel;
 import com.example.liuhaoyuan.simplereader.base.BasePresenter;
 import com.example.liuhaoyuan.simplereader.base.BaseView;
 import com.example.liuhaoyuan.simplereader.bean.MovieDetailBean;
+import com.example.liuhaoyuan.simplereader.bean.MovieHumanBean;
 import com.example.liuhaoyuan.simplereader.bean.MovieHumanDetailBean;
 import com.example.liuhaoyuan.simplereader.bean.MovieListBean;
 
@@ -28,16 +27,17 @@ public interface MovieContract {
         Observable<MovieHumanDetailBean> getHumanDetail(String id);
     }
 
-    interface MovieListView extends BaseListView {
-
-    }
-
-    abstract class BaseMovieListPresenter extends BasePresenter<MovieListView, Model> {
-        public abstract void getMovieList(String category, String start, String count, boolean loadMore);
-    }
-
     interface MovieDetailView extends BaseView {
-        void initUi(MovieDetailBean bean);
+        void setPoster(String imageUrl);
+        void setTitle(String title);
+        void setRating(float rating,int max);
+        void setRatingCount(int ratingCount);
+        void setCountry(List<String> country);
+        void setYear(String year);
+        void setGenre(List<String> genres);
+        void setSummary(String summary);
+        void setDirectors(List<MovieHumanBean> directors);
+        void setCasts(List<MovieHumanBean> casts);
     }
 
     abstract class MovieDetailPresenter extends BasePresenter<MovieDetailView, Model> {
@@ -45,9 +45,14 @@ public interface MovieContract {
     }
 
     interface HumanDetailView extends BaseView{
-        void initUi(MovieHumanDetailBean bean);
-        void updateHumanSummary(String summary);
-        void updateHumanPhotos(List<String> photos);
+        void setHumanPoster(String imageUrl);
+        void setName(String name);
+        void setNameEn(String nameEn);
+        void setGender(String gender);
+        void setBornPlace(String bornPlace);
+        void setWorks(List<MovieHumanDetailBean.WorksBean> works);
+        void setHumanSummary(String summary);
+        void setHumanPhotos(List<String> photos);
     }
 
     abstract class HumanPresenter extends BasePresenter<HumanDetailView,Model>{

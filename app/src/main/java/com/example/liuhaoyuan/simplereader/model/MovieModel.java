@@ -13,29 +13,39 @@ import io.reactivex.Observable;
  * Created by liuhaoyuan on 17/4/23.
  */
 
-public class MovieModel implements MovieContract.Model{
-    @Override
+public class MovieModel{
+    private static MovieModel instance;
+    private DouBanApiService mDouBanService;
+    private MovieModel(){
+        mDouBanService=ApiEngine.getInstance().getDouBanApiService();
+    }
+    public static synchronized MovieModel getInstance(){
+        if (instance==null){
+            instance=new MovieModel();
+        }
+        return instance;
+    }
+
     public Observable<MovieListBean> getMovieRankList(String rankTitle, String start, String count) {
-        DouBanApiService service = ApiEngine.getInstance().getDouBanApiService();
         Observable<MovieListBean> observable = null;
         switch (rankTitle) {
             case "正在热映":
-                observable = service.getMovieInTheaters(start, count);
+                observable = mDouBanService.getMovieInTheaters(start, count);
                 break;
             case "即将上映":
-                observable = service.getMovieComingSoon(start, count);
+                observable = mDouBanService.getMovieComingSoon(start, count);
                 break;
             case "Top250":
-                observable = service.getMovieTop250(start, count);
+                observable = mDouBanService.getMovieTop250(start, count);
                 break;
             case "口碑榜":
-                observable = service.getMovieWeekly(start, count);
+                observable = mDouBanService.getMovieWeekly(start, count);
                 break;
             case "北美票房榜":
-                observable = service.getMovieUsBox(start, count);
+                observable = mDouBanService.getMovieUsBox(start, count);
                 break;
             case "新片榜":
-                observable = service.getMovieNew(start, count);
+                observable = mDouBanService.getMovieNew(start, count);
                 break;
             default:
                 break;
@@ -43,18 +53,15 @@ public class MovieModel implements MovieContract.Model{
         return observable;
     }
 
-    @Override
     public Observable<MovieDetailBean> getMovieDetail(String id) {
-        return ApiEngine.getInstance().getDouBanApiService().getMovieDetail(id);
+        return mDouBanService.getMovieDetail(id);
     }
 
-    @Override
     public Observable<MovieListBean> getMovieByTag(String tag, String start, String count) {
-        return ApiEngine.getInstance().getDouBanApiService().getMovieByTag(tag, start, count);
+        return mDouBanService.getMovieByTag(tag, start, count);
     }
 
-    @Override
     public Observable<MovieHumanDetailBean> getHumanDetail(String id) {
-        return ApiEngine.getInstance().getDouBanApiService().getMovieHumanDetail(id);
+        return mDouBanService.getMovieHumanDetail(id);
     }
 }

@@ -35,7 +35,7 @@ public class MusicListFragment extends BaseListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mCategory = getArguments().getString(ConstantValues.DOUBAN_MUSIC_CATEGORY);
-        mModel = new MusicModel();
+        mModel = MusicModel.getInstance();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -83,7 +83,7 @@ public class MusicListFragment extends BaseListFragment {
 
     @Override
     protected RecyclerView.LayoutManager onCreateLayoutManager() {
-        return new GridLayoutManager(getContext(), 2);
+        return new GridLayoutManager(getContext(), 3);
     }
 
     @Override

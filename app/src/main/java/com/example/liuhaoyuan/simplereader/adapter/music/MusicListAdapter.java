@@ -2,6 +2,10 @@ package com.example.liuhaoyuan.simplereader.adapter.music;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +13,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.BitmapTypeRequest;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
 import com.example.liuhaoyuan.simplereader.adapter.BaseListAdapter;
@@ -41,9 +49,22 @@ public class MusicListAdapter extends BaseListAdapter<List<MusicItemBean>, Music
     }
 
     @Override
-    public void onBindViewHolder(MusicListHolder holder, int position) {
+    public void onBindViewHolder(final MusicListHolder holder, int position) {
         final MusicItemBean bean = mData.get(position);
-        Glide.with(mContext).load(bean.image).into(holder.mPosterIv);
+        Glide.with(mContext).load(bean.image).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                holder.mPosterIv.setImageBitmap(resource);
+                ViewUtils.getDominantColor(resource, new ViewUtils.PaletteCallBack() {
+                    @Override
+                    public void onColorGenerated(int color, int textColor) {
+                        holder.mCardView.setCardBackgroundColor(color);
+                        holder.mSingerTv.setTextColor(textColor);
+                        holder.mTitleTv.setTextColor(textColor);
+                    }
+                });
+            }
+        });
         ViewUtils.setTextViewText(holder.mTitleTv, bean.title);
         StringBuilder builder = new StringBuilder();
         for (String s : bean.attrs.singer) {
@@ -67,6 +88,8 @@ public class MusicListAdapter extends BaseListAdapter<List<MusicItemBean>, Music
 
     public static class MusicListHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.card_music)
+        CardView mCardView;
         @BindView(R.id.iv_poster)
         ImageView mPosterIv;
         @BindView(R.id.tv_title)

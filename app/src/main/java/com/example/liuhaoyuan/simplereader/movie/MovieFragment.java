@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
-import com.example.liuhaoyuan.simplereader.adapter.CommenPagerAdapter;
+import com.example.liuhaoyuan.simplereader.adapter.CommonPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +60,7 @@ public class MovieFragment extends Fragment {
             fragment.setArguments(bundle);
             fragments.add(fragment);
         }
-        CommenPagerAdapter<MovieListFragment> adapter = new CommenPagerAdapter<>(getChildFragmentManager(), fragments,mMovieCategory);
+        CommonPagerAdapter<MovieListFragment> adapter = new CommonPagerAdapter<>(getChildFragmentManager(), fragments,mMovieCategory);
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }

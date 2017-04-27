@@ -17,15 +17,6 @@ import io.reactivex.Observable;
  */
 
 public interface MovieContract {
-    interface Model extends BaseModel {
-        Observable<MovieListBean> getMovieRankList(String rankTitle, String start, String count);
-
-        Observable<MovieDetailBean> getMovieDetail(String id);
-
-        Observable<MovieListBean> getMovieByTag(String tag, String start, String count);
-
-        Observable<MovieHumanDetailBean> getHumanDetail(String id);
-    }
 
     interface MovieDetailView extends BaseView {
         void setPoster(String imageUrl);
@@ -40,7 +31,7 @@ public interface MovieContract {
         void setCasts(List<MovieHumanBean> casts);
     }
 
-    abstract class MovieDetailPresenter extends BasePresenter<MovieDetailView, Model> {
+    abstract class MovieDetailPresenter extends BasePresenter {
         public abstract void getMovieDetail(String id);
     }
 
@@ -55,7 +46,7 @@ public interface MovieContract {
         void setHumanPhotos(List<String> photos);
     }
 
-    abstract class HumanPresenter extends BasePresenter<HumanDetailView,Model>{
+    abstract class HumanPresenter extends BasePresenter{
         public abstract void getHumanDetail(String id);
         public abstract void getHumanSummary(String id);
         public abstract void getHumanPhotos(String id);

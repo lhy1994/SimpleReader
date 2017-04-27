@@ -22,9 +22,11 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class MovieHumanDetailPresenter extends MovieContract.HumanPresenter {
+    private MovieContract.HumanDetailView mView;
+    private MovieModel mModel;
     public MovieHumanDetailPresenter(MovieContract.HumanDetailView view) {
         this.mView = view;
-        mModel = new MovieModel();
+        mModel = MovieModel.getInstance();
     }
 
     @Override

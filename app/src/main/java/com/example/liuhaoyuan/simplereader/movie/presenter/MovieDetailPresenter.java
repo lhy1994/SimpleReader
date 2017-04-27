@@ -16,9 +16,11 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class MovieDetailPresenter extends MovieContract.MovieDetailPresenter {
+    private MovieContract.MovieDetailView mView;
+    private MovieModel mModel;
     public MovieDetailPresenter(MovieContract.MovieDetailView view) {
         this.mView=view;
-        this.mModel=new MovieModel();
+        this.mModel=MovieModel.getInstance();
     }
 
     @Override

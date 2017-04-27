@@ -36,7 +36,7 @@ public class BookListFragment extends BaseListFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mCategory = getArguments().getString(ConstantValues.DOUBAN_BOOK_CATEGORY);
-        mModel = new BookModel();
+        mModel = BookModel.getInstance();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

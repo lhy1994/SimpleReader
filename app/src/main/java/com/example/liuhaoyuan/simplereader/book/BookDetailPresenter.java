@@ -1,5 +1,7 @@
 package com.example.liuhaoyuan.simplereader.book;
 
+import android.text.TextUtils;
+
 import com.example.liuhaoyuan.simplereader.bean.BookItemBean;
 import com.example.liuhaoyuan.simplereader.bean.BookListBean;
 import com.example.liuhaoyuan.simplereader.model.BookModel;
@@ -16,9 +18,11 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class BookDetailPresenter extends BookContract.DetailPresenter{
+    private BookContract.DetailView mView;
+    private BookModel mModel;
     public BookDetailPresenter (BookContract.DetailView view){
         mView=view;
-        mModel=new BookModel();
+        mModel=BookModel.getInstance();
     }
     @Override
     public void getBookDetail(String id) {
@@ -36,8 +40,13 @@ public class BookDetailPresenter extends BookContract.DetailPresenter{
                         mView.setAuthor(bookItemBean.author);
                         mView.setPubDate(bookItemBean.pubdate);
                         mView.setPublisher(bookItemBean.publisher);
+                        mView.setSummary(bookItemBean.summary);
                         mView.setAuthorIntro(bookItemBean.author_intro);
-                        getSeriesBooks(bookItemBean.series.id);
+                        if (bookItemBean.series!=null){
+                            getSeriesBooks(bookItemBean.series.id);
+                        }else {
+                            getSeriesBooks(null);
+                        }
                     }
                 });
         addDisposable(disposable);
@@ -45,6 +54,10 @@ public class BookDetailPresenter extends BookContract.DetailPresenter{
 
     @Override
     public void getSeriesBooks(String id) {
+        if (TextUtils.isEmpty(id)){
+            mView.hideSeriesList();
+            return;
+        }
         Disposable disposable = mModel.getSeriesBooks(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

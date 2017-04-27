@@ -7,9 +7,7 @@ import io.reactivex.disposables.Disposable;
  * Created by liuhaoyuan on 17/4/23.
  */
 
-public abstract class BasePresenter<V extends BaseView,M extends BaseModel> {
-    protected V mView;
-    protected M mModel;
+public abstract class BasePresenter {
     protected CompositeDisposable mCompositeDisposable;
 
     protected void addDisposable(Disposable disposable){

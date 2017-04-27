@@ -88,7 +88,7 @@ public class MusicDetailActivity extends BaseActivity<MusicContract.DetailPresen
     public void setGenre(List<String> genres) {
         if (!DataUtils.isEmptyList(genres)) {
             mGenre.removeAllViews();
-            for (int i = 0; i < genres.size() && i < 4; i++) {
+            for (int i = 0; i < genres.size() && i < 3; i++) {
                 String genre = genres.get(i);
                 TextView textView = new TextView(this);
                 ViewUtils.setTextViewText(textView, genre);

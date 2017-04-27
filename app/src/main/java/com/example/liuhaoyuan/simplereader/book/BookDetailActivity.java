@@ -3,6 +3,8 @@ package com.example.liuhaoyuan.simplereader.book;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -38,10 +40,14 @@ public class BookDetailActivity extends BaseActivity<BookContract.DetailPresente
     TextView mPubDateTv;
     @BindView(R.id.tv_publisher)
     TextView mPublisherTv;
+    @BindView(R.id.tv_summary)
+    TextView mSummaryTv;
     @BindView(R.id.tv_author_intro)
     TextView mAuthorIntroTv;
     @BindView(R.id.lv_series)
     RecyclerView mSeriesList;
+    @BindView(R.id.tv_series)
+    TextView mSeriesTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +82,11 @@ public class BookDetailActivity extends BaseActivity<BookContract.DetailPresente
 
     @Override
     public void setOriginTitle(String originTitle) {
-        ViewUtils.setTextViewText(mOriginTitleTv,"原名：",originTitle);
+        if (TextUtils.isEmpty(originTitle)){
+            mOriginTitleTv.setVisibility(View.GONE);
+        }else {
+            ViewUtils.setTextViewText(mOriginTitleTv,"原名：",originTitle);
+        }
     }
 
     @Override
@@ -99,6 +109,11 @@ public class BookDetailActivity extends BaseActivity<BookContract.DetailPresente
     }
 
     @Override
+    public void setSummary(String summary) {
+        mSummaryTv.setText(summary);
+    }
+
+    @Override
     public void setAuthorIntro(String authorIntro) {
         ViewUtils.setTextViewText(mAuthorIntroTv,authorIntro);
     }
@@ -109,5 +124,11 @@ public class BookDetailActivity extends BaseActivity<BookContract.DetailPresente
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
         mSeriesList.setLayoutManager(layoutManager);
         mSeriesList.setAdapter(adapter);
+    }
+
+    @Override
+    public void hideSeriesList() {
+        mSeriesTv.setVisibility(View.GONE);
+        mSeriesList.setVisibility(View.GONE);
     }
 }

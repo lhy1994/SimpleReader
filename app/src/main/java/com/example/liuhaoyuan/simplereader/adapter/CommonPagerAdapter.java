@@ -10,10 +10,10 @@ import java.util.List;
  * Created by liuhaoyuan on 2017/4/26.
  */
 
-public class CommenPagerAdapter<T extends Fragment> extends FragmentPagerAdapter {
+public class CommonPagerAdapter<T extends Fragment> extends FragmentPagerAdapter {
     private List<T> mFragments;
     private String [] mTitles;
-    public CommenPagerAdapter(FragmentManager fm,List<T> fragments,String[] titles) {
+    public CommonPagerAdapter(FragmentManager fm, List<T> fragments, String[] titles) {
         super(fm);
         mFragments=fragments;
         mTitles=titles;

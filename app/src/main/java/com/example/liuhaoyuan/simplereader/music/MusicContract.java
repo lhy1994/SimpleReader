@@ -15,10 +15,6 @@ import io.reactivex.Observable;
  */
 
 public interface MusicContract {
-    interface Model extends BaseModel{
-        Observable<MusicListBean> getMusicList(String category,String start,String count);
-        Observable<MusicItemBean> getMusicDetail(String id);
-    }
 
     interface DetailView extends BaseView{
         void setPoster(String imageUrl);
@@ -30,7 +26,7 @@ public interface MusicContract {
         void setSongList(List<String> songList);
     }
 
-    abstract class DetailPresenter extends BasePresenter<DetailView,Model>{
+    abstract class DetailPresenter extends BasePresenter{
         public abstract void getMusicDetail(String id);
     }
 }

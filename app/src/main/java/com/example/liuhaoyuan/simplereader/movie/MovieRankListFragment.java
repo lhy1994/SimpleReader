@@ -35,7 +35,7 @@ public class MovieRankListFragment extends BaseListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRankTitle = getArguments().getString(ConstantValues.DOUBAN_MOVIE_RANK_TITLE);
-        mModel = new MovieModel();
+        mModel = MovieModel.getInstance();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

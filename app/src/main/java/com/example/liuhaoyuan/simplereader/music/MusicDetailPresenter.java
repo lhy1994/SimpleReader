@@ -2,10 +2,8 @@ package com.example.liuhaoyuan.simplereader.music;
 
 import com.example.liuhaoyuan.simplereader.bean.MusicItemBean;
 import com.example.liuhaoyuan.simplereader.model.MusicModel;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -20,9 +18,11 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class MusicDetailPresenter extends MusicContract.DetailPresenter {
+    private MusicContract.DetailView mView;
+    private MusicModel mModel;
     public MusicDetailPresenter(MusicContract.DetailView view) {
         mView = view;
-        mModel = new MusicModel();
+        mModel = MusicModel.getInstance();
     }
 
     @Override

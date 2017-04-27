@@ -15,13 +15,6 @@ import io.reactivex.Observable;
  */
 
 public interface BookContract {
-    interface Model extends BaseModel {
-        Observable<BookListBean> getBookByTag(String tag, String start, String count);
-
-        Observable<BookItemBean> getBookDetail(String id);
-
-        Observable<BookListBean> getSeriesBooks(String id);
-    }
 
     interface DetailView extends BaseView {
         void setPoster(String imageUrl);
@@ -38,12 +31,16 @@ public interface BookContract {
 
         void setPublisher(String publisher);
 
+        void setSummary(String summary);
+
         void setAuthorIntro(String authorIntro);
 
         void setSeriesList(List<BookItemBean> list);
+
+        void hideSeriesList();
     }
 
-    abstract class DetailPresenter extends BasePresenter<DetailView, Model> {
+    abstract class DetailPresenter extends BasePresenter {
         public abstract void getBookDetail(String id);
         public abstract void getSeriesBooks(String id);
     }

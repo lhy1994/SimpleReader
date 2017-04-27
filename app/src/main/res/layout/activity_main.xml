@@ -10,7 +10,8 @@
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_weight="1">
 
     </FrameLayout>
@@ -20,6 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:overScrollMode="always"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:background="?android:attr/windowBackground"
         app:menu="@menu/navigation" />
 

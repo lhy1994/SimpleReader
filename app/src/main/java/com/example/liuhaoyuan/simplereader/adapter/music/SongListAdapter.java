@@ -20,9 +20,15 @@ import butterknife.ButterKnife;
 
 public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.SongListHolder> {
     private List<String> mData;
+    private int mTextColor=0;
 
     public SongListAdapter(List<String> data) {
         this.mData = data;
+    }
+
+    public void setTextColor(int textColor){
+        mTextColor=textColor;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -35,6 +41,9 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.SongLi
     public void onBindViewHolder(SongListHolder holder, int position) {
         ViewUtils.setTextViewText(holder.mPositionTv,String.valueOf(position+1));
         ViewUtils.setTextViewText(holder.mTitleTv,mData.get(position));
+        if (mTextColor!=0){
+            holder.mTitleTv.setTextColor(mTextColor);
+        }
     }
 
     @Override

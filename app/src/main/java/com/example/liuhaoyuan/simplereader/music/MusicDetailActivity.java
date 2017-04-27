@@ -1,7 +1,9 @@
 package com.example.liuhaoyuan.simplereader.music;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,6 +14,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
 import com.example.liuhaoyuan.simplereader.adapter.music.SongListAdapter;
@@ -26,6 +30,8 @@ import butterknife.ButterKnife;
 
 public class MusicDetailActivity extends BaseActivity<MusicContract.DetailPresenter> implements MusicContract.DetailView {
 
+    @BindView(R.id.container)
+    NestedScrollView mContainer;
     @BindView(R.id.iv_poster)
     ImageView mPosterIv;
     @BindView(R.id.tv_title)
@@ -42,6 +48,9 @@ public class MusicDetailActivity extends BaseActivity<MusicContract.DetailPresen
     LinearLayout mGenre;
     @BindView(R.id.lv_album_songs)
     RecyclerView mAlbumSongsList;
+    @BindView(R.id.tv_songs)
+    TextView mSongsTv;
+    private SongListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +68,26 @@ public class MusicDetailActivity extends BaseActivity<MusicContract.DetailPresen
 
     @Override
     public void setPoster(String imageUrl) {
-        Glide.with(this).load(imageUrl).into(mPosterIv);
+//        Glide.with(this).load(imageUrl).into(mPosterIv);
+        Glide.with(this).load(imageUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                mPosterIv.setImageBitmap(resource);
+                ViewUtils.getMutedColor(resource, new ViewUtils.PaletteCallBack() {
+                    @Override
+                    public void onColorGenerated(int color, int textColor) {
+                        mContainer.setBackgroundColor(color);
+                        mTitleTv.setTextColor(textColor);
+                        mRatingCountTv.setTextColor(textColor);
+                        mSummaryTv.setTextColor(textColor);
+                        mSongsTv.setTextColor(textColor);
+                        if (mAdapter!=null){
+                            mAdapter.setTextColor(textColor);
+                        }
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -112,9 +140,9 @@ public class MusicDetailActivity extends BaseActivity<MusicContract.DetailPresen
 
     @Override
     public void setSongList(List<String> songList) {
-        SongListAdapter adapter = new SongListAdapter(songList);
+        mAdapter = new SongListAdapter(songList);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mAlbumSongsList.setLayoutManager(manager);
-        mAlbumSongsList.setAdapter(adapter);
+        mAlbumSongsList.setAdapter(mAdapter);
     }
 }

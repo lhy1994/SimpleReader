@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface MovieContract {
 
-    interface MovieDetailView extends BaseView {
+    interface MovieDetailView extends BaseView<MovieDetailPresenter> {
         void setPoster(String imageUrl);
         void setTitle(String title);
         void setRating(float rating,int max);
@@ -30,7 +30,7 @@ public interface MovieContract {
         public abstract void getMovieDetail(String id);
     }
 
-    interface HumanDetailView extends BaseView{
+    interface HumanDetailView extends BaseView<HumanPresenter>{
         void setHumanPoster(String imageUrl);
         void setName(String name);
         void setNameEn(String nameEn);

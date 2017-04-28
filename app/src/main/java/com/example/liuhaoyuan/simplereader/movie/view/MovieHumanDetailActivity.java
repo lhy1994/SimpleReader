@@ -1,6 +1,7 @@
 package com.example.liuhaoyuan.simplereader.movie.view;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -13,11 +14,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
-import com.example.liuhaoyuan.simplereader.base.BaseActivity;
-import com.example.liuhaoyuan.simplereader.bean.movie.MovieHumanDetailBean;
-import com.example.liuhaoyuan.simplereader.movie.MovieContract;
 import com.example.liuhaoyuan.simplereader.adapter.movie.PhotosAdapter;
 import com.example.liuhaoyuan.simplereader.adapter.movie.WorksAdapter;
+import com.example.liuhaoyuan.simplereader.bean.movie.MovieHumanDetailBean;
+import com.example.liuhaoyuan.simplereader.movie.MovieContract;
 import com.example.liuhaoyuan.simplereader.movie.presenter.MovieHumanDetailPresenter;
 import com.example.liuhaoyuan.simplereader.util.DataUtils;
 import com.example.liuhaoyuan.simplereader.util.ViewUtils;
@@ -27,7 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MovieHumanDetailActivity extends BaseActivity<MovieContract.HumanPresenter> implements MovieContract.HumanDetailView {
+public class MovieHumanDetailActivity extends AppCompatActivity implements MovieContract.HumanDetailView {
 
     @BindView(R.id.iv_movie_human)
     ImageView mMovieHumanIv;
@@ -47,6 +47,7 @@ public class MovieHumanDetailActivity extends BaseActivity<MovieContract.HumanPr
     RecyclerView mPhotosList;
     @BindView(R.id.tv_photos)
     TextView mPhotosTV;
+    private MovieContract.HumanPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +57,14 @@ public class MovieHumanDetailActivity extends BaseActivity<MovieContract.HumanPr
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         String id = getIntent().getStringExtra(ConstantValues.DOUBAN_MOVIE_HUMAN_ID);
+        mPresenter = setPresenter();
         mPresenter.getHumanDetail(id);
     }
 
     @Override
-    public MovieContract.HumanPresenter onCreatePresenter() {
-        return new MovieHumanDetailPresenter(this);
+    protected void onPause() {
+        super.onPause();
+        mPresenter.clearDisposable();
     }
 
     @Override
@@ -117,5 +120,10 @@ public class MovieHumanDetailActivity extends BaseActivity<MovieContract.HumanPr
             mPhotosList.setLayoutManager(layoutManager);
             mPhotosList.setAdapter(adapter);
         }
+    }
+
+    @Override
+    public MovieContract.HumanPresenter setPresenter() {
+        return new MovieHumanDetailPresenter(this);
     }
 }

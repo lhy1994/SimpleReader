@@ -10,14 +10,14 @@ import io.reactivex.disposables.Disposable;
 public abstract class BasePresenter {
     protected CompositeDisposable mCompositeDisposable;
 
-    protected void addDisposable(Disposable disposable){
+    public void addDisposable(Disposable disposable){
         if (mCompositeDisposable==null){
             mCompositeDisposable=new CompositeDisposable();
         }
         mCompositeDisposable.add(disposable);
     }
 
-    protected void clearDisposable(){
+    public void clearDisposable(){
         if (mCompositeDisposable!=null){
             mCompositeDisposable.clear();
         }

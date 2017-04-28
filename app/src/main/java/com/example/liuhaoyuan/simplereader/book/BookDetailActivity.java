@@ -1,6 +1,7 @@
 package com.example.liuhaoyuan.simplereader.book;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -13,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
 import com.example.liuhaoyuan.simplereader.adapter.book.BookListAdapter;
-import com.example.liuhaoyuan.simplereader.base.BaseActivity;
 import com.example.liuhaoyuan.simplereader.bean.book.BookItemBean;
 import com.example.liuhaoyuan.simplereader.util.ViewUtils;
 
@@ -22,7 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BookDetailActivity extends BaseActivity<BookContract.DetailPresenter> implements BookContract.DetailView {
+public class BookDetailActivity extends AppCompatActivity implements BookContract.DetailView {
 
     @BindView(R.id.iv_poster)
     ImageView mPosterIv;
@@ -49,18 +49,24 @@ public class BookDetailActivity extends BaseActivity<BookContract.DetailPresente
     @BindView(R.id.tv_series)
     TextView mSeriesTv;
 
+    private BookContract.DetailPresenter mPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail);
         ButterKnife.bind(this);
         String id = getIntent().getStringExtra(ConstantValues.DOUBAN_BOOK_ID);
+        mPresenter=setPresenter();
         mPresenter.getBookDetail(id);
     }
 
     @Override
-    public BookContract.DetailPresenter onCreatePresenter() {
-        return new BookDetailPresenter(this);
+    protected void onPause() {
+        super.onPause();
+        if (mPresenter!=null){
+            mPresenter.clearDisposable();
+        }
     }
 
     @Override
@@ -130,5 +136,10 @@ public class BookDetailActivity extends BaseActivity<BookContract.DetailPresente
     public void hideSeriesList() {
         mSeriesTv.setVisibility(View.GONE);
         mSeriesList.setVisibility(View.GONE);
+    }
+
+    @Override
+    public BookContract.DetailPresenter setPresenter() {
+        return new BookDetailPresenter(this);
     }
 }

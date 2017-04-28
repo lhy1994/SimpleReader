@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface MusicContract {
 
-    interface DetailView extends BaseView{
+    interface DetailView extends BaseView<DetailPresenter>{
         void setPoster(String imageUrl);
         void setTitle(String title);
         void setRating(float rating,int max);

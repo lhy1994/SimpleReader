@@ -2,6 +2,7 @@ package com.example.liuhaoyuan.simplereader.movie.view;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,11 +18,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
-import com.example.liuhaoyuan.simplereader.base.BaseActivity;
+import com.example.liuhaoyuan.simplereader.adapter.movie.MovieHumanAdapter;
 import com.example.liuhaoyuan.simplereader.bean.movie.MovieHumanBean;
 import com.example.liuhaoyuan.simplereader.movie.MovieContract;
 import com.example.liuhaoyuan.simplereader.movie.presenter.MovieDetailPresenter;
-import com.example.liuhaoyuan.simplereader.adapter.movie.MovieHumanAdapter;
 import com.example.liuhaoyuan.simplereader.util.DataUtils;
 import com.example.liuhaoyuan.simplereader.util.ViewUtils;
 
@@ -31,7 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MovieDetailActivity extends BaseActivity<MovieContract.MovieDetailPresenter> implements MovieContract.MovieDetailView {
+public class MovieDetailActivity extends AppCompatActivity implements MovieContract.MovieDetailView {
 
     @BindView(R.id.header_view)
     RelativeLayout mHeaderView;
@@ -62,18 +62,21 @@ public class MovieDetailActivity extends BaseActivity<MovieContract.MovieDetailP
     @BindView(R.id.btn_more_summary)
     TextView mMoreSummaryBtn;
     private boolean mOpenSummary;
+    private MovieContract.MovieDetailPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         ButterKnife.bind(this);
+        mPresenter = setPresenter();
         mPresenter.getMovieDetail(getIntent().getStringExtra(ConstantValues.DOUBAN_MOVIE_ID));
     }
 
     @Override
-    public MovieContract.MovieDetailPresenter onCreatePresenter() {
-        return new MovieDetailPresenter(this);
+    protected void onPause() {
+        super.onPause();
+        mPresenter.clearDisposable();
     }
 
     @OnClick(R.id.btn_more_summary)
@@ -179,5 +182,10 @@ public class MovieDetailActivity extends BaseActivity<MovieContract.MovieDetailP
         MovieHumanAdapter castAdapter = new MovieHumanAdapter(this, casts);
         mMovieCastsList.setLayoutManager(castsManager);
         mMovieCastsList.setAdapter(castAdapter);
+    }
+
+    @Override
+    public MovieContract.MovieDetailPresenter setPresenter() {
+        return new MovieDetailPresenter(this);
     }
 }

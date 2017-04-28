@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -19,7 +20,6 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
 import com.example.liuhaoyuan.simplereader.adapter.music.SongListAdapter;
-import com.example.liuhaoyuan.simplereader.base.BaseActivity;
 import com.example.liuhaoyuan.simplereader.util.DataUtils;
 import com.example.liuhaoyuan.simplereader.util.ViewUtils;
 
@@ -28,7 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MusicDetailActivity extends BaseActivity<MusicContract.DetailPresenter> implements MusicContract.DetailView {
+public class MusicDetailActivity extends AppCompatActivity implements MusicContract.DetailView {
 
     @BindView(R.id.container)
     NestedScrollView mContainer;
@@ -51,6 +51,7 @@ public class MusicDetailActivity extends BaseActivity<MusicContract.DetailPresen
     @BindView(R.id.tv_songs)
     TextView mSongsTv;
     private SongListAdapter mAdapter;
+    private MusicContract.DetailPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +59,14 @@ public class MusicDetailActivity extends BaseActivity<MusicContract.DetailPresen
         setContentView(R.layout.activity_music_detail);
         ButterKnife.bind(this);
         String id = getIntent().getStringExtra(ConstantValues.DOUBAN_MUSIC_ID);
+        mPresenter = setPresenter();
         mPresenter.getMusicDetail(id);
     }
 
     @Override
-    public MusicContract.DetailPresenter onCreatePresenter() {
-        return new MusicDetailPresenter(this);
+    protected void onPause() {
+        super.onPause();
+        mPresenter.clearDisposable();
     }
 
     @Override
@@ -144,5 +147,10 @@ public class MusicDetailActivity extends BaseActivity<MusicContract.DetailPresen
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mAlbumSongsList.setLayoutManager(manager);
         mAlbumSongsList.setAdapter(mAdapter);
+    }
+
+    @Override
+    public MusicContract.DetailPresenter setPresenter() {
+        return new MusicDetailPresenter(this);
     }
 }

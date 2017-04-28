@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface BookContract {
 
-    interface DetailView extends BaseView {
+    interface DetailView extends BaseView<DetailPresenter> {
         void setPoster(String imageUrl);
 
         void setTitle(String title);

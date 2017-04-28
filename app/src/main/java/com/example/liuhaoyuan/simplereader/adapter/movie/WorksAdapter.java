@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
-import com.example.liuhaoyuan.simplereader.bean.MovieHumanDetailBean;
+import com.example.liuhaoyuan.simplereader.bean.movie.MovieHumanDetailBean;
 import com.example.liuhaoyuan.simplereader.movie.view.MovieDetailActivity;
 import com.example.liuhaoyuan.simplereader.util.DataUtils;
 import com.example.liuhaoyuan.simplereader.util.ViewUtils;

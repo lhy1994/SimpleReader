@@ -14,7 +14,7 @@ import com.example.liuhaoyuan.simplereader.ConstantValues;
 import com.example.liuhaoyuan.simplereader.R;
 import com.example.liuhaoyuan.simplereader.adapter.book.BookListAdapter;
 import com.example.liuhaoyuan.simplereader.base.BaseActivity;
-import com.example.liuhaoyuan.simplereader.bean.BookItemBean;
+import com.example.liuhaoyuan.simplereader.bean.book.BookItemBean;
 import com.example.liuhaoyuan.simplereader.util.ViewUtils;
 
 import java.util.List;

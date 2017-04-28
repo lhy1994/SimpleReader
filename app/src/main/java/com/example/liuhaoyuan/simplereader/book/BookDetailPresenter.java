@@ -2,8 +2,8 @@ package com.example.liuhaoyuan.simplereader.book;
 
 import android.text.TextUtils;
 
-import com.example.liuhaoyuan.simplereader.bean.BookItemBean;
-import com.example.liuhaoyuan.simplereader.bean.BookListBean;
+import com.example.liuhaoyuan.simplereader.bean.book.BookItemBean;
+import com.example.liuhaoyuan.simplereader.bean.book.BookListBean;
 import com.example.liuhaoyuan.simplereader.model.BookModel;
 import com.example.liuhaoyuan.simplereader.util.DataUtils;
 

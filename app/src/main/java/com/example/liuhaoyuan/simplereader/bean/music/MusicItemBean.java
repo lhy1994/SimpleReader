@@ -1,4 +1,6 @@
-package com.example.liuhaoyuan.simplereader.bean;
+package com.example.liuhaoyuan.simplereader.bean.music;
+
+import com.example.liuhaoyuan.simplereader.bean.RatingBean;
 
 import java.util.List;
 

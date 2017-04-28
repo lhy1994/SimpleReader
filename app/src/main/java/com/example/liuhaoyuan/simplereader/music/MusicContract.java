@@ -1,14 +1,9 @@
 package com.example.liuhaoyuan.simplereader.music;
 
-import com.example.liuhaoyuan.simplereader.base.BaseModel;
 import com.example.liuhaoyuan.simplereader.base.BasePresenter;
 import com.example.liuhaoyuan.simplereader.base.BaseView;
-import com.example.liuhaoyuan.simplereader.bean.MusicItemBean;
-import com.example.liuhaoyuan.simplereader.bean.MusicListBean;
 
 import java.util.List;
-
-import io.reactivex.Observable;
 
 /**
  * Created by liuhaoyuan on 2017/4/26.

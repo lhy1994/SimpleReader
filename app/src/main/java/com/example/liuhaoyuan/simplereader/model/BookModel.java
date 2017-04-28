@@ -2,9 +2,8 @@ package com.example.liuhaoyuan.simplereader.model;
 
 import com.example.liuhaoyuan.simplereader.api.ApiEngine;
 import com.example.liuhaoyuan.simplereader.api.DouBanApiService;
-import com.example.liuhaoyuan.simplereader.bean.BookItemBean;
-import com.example.liuhaoyuan.simplereader.bean.BookListBean;
-import com.example.liuhaoyuan.simplereader.book.BookContract;
+import com.example.liuhaoyuan.simplereader.bean.book.BookItemBean;
+import com.example.liuhaoyuan.simplereader.bean.book.BookListBean;
 
 import io.reactivex.Observable;
 

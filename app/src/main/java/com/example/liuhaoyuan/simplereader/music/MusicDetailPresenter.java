@@ -1,6 +1,6 @@
 package com.example.liuhaoyuan.simplereader.music;
 
-import com.example.liuhaoyuan.simplereader.bean.MusicItemBean;
+import com.example.liuhaoyuan.simplereader.bean.music.MusicItemBean;
 import com.example.liuhaoyuan.simplereader.model.MusicModel;
 import java.util.ArrayList;
 import java.util.List;

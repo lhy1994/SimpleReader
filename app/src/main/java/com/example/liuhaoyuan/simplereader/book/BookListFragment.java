@@ -1,6 +1,5 @@
 package com.example.liuhaoyuan.simplereader.book;
 
-import android.media.MediaDataSource;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,7 +13,7 @@ import com.example.liuhaoyuan.simplereader.adapter.BaseListAdapter;
 import com.example.liuhaoyuan.simplereader.adapter.book.BookListAdapter;
 import com.example.liuhaoyuan.simplereader.base.BaseListFragment;
 import com.example.liuhaoyuan.simplereader.bean.BaseListBean;
-import com.example.liuhaoyuan.simplereader.bean.BookListBean;
+import com.example.liuhaoyuan.simplereader.bean.book.BookListBean;
 import com.example.liuhaoyuan.simplereader.model.BookModel;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

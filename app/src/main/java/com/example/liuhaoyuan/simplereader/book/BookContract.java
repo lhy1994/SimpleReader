@@ -1,14 +1,10 @@
 package com.example.liuhaoyuan.simplereader.book;
 
-import com.example.liuhaoyuan.simplereader.base.BaseModel;
 import com.example.liuhaoyuan.simplereader.base.BasePresenter;
 import com.example.liuhaoyuan.simplereader.base.BaseView;
-import com.example.liuhaoyuan.simplereader.bean.BookItemBean;
-import com.example.liuhaoyuan.simplereader.bean.BookListBean;
+import com.example.liuhaoyuan.simplereader.bean.book.BookItemBean;
 
 import java.util.List;
-
-import io.reactivex.Observable;
 
 /**
  * Created by liuhaoyuan on 17/4/26.

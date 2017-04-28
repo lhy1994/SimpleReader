@@ -1,7 +1,7 @@
 package com.example.liuhaoyuan.simplereader.movie.presenter;
 
 import com.example.liuhaoyuan.simplereader.api.GetActor;
-import com.example.liuhaoyuan.simplereader.bean.MovieHumanDetailBean;
+import com.example.liuhaoyuan.simplereader.bean.movie.MovieHumanDetailBean;
 import com.example.liuhaoyuan.simplereader.model.MovieModel;
 import com.example.liuhaoyuan.simplereader.movie.MovieContract;
 import com.example.liuhaoyuan.simplereader.util.DataUtils;

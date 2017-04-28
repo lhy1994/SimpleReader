@@ -13,8 +13,8 @@ import com.example.liuhaoyuan.simplereader.adapter.BaseListAdapter;
 import com.example.liuhaoyuan.simplereader.adapter.movie.MovieListAdapter;
 import com.example.liuhaoyuan.simplereader.base.BaseListFragment;
 import com.example.liuhaoyuan.simplereader.bean.BaseListBean;
-import com.example.liuhaoyuan.simplereader.bean.MovieItemBean;
-import com.example.liuhaoyuan.simplereader.bean.MovieListBean;
+import com.example.liuhaoyuan.simplereader.bean.movie.MovieItemBean;
+import com.example.liuhaoyuan.simplereader.bean.movie.MovieListBean;
 import com.example.liuhaoyuan.simplereader.model.MovieModel;
 
 import java.util.List;

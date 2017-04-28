@@ -1,20 +1,17 @@
 package com.example.liuhaoyuan.simplereader.api;
 
-import com.example.liuhaoyuan.simplereader.bean.BookItemBean;
-import com.example.liuhaoyuan.simplereader.bean.BookListBean;
-import com.example.liuhaoyuan.simplereader.bean.MovieDetailBean;
-import com.example.liuhaoyuan.simplereader.bean.MovieHumanDetailBean;
-import com.example.liuhaoyuan.simplereader.bean.MovieListBean;
-import com.example.liuhaoyuan.simplereader.bean.MusicItemBean;
-import com.example.liuhaoyuan.simplereader.bean.MusicListBean;
-
-import java.util.Map;
+import com.example.liuhaoyuan.simplereader.bean.book.BookItemBean;
+import com.example.liuhaoyuan.simplereader.bean.book.BookListBean;
+import com.example.liuhaoyuan.simplereader.bean.movie.MovieDetailBean;
+import com.example.liuhaoyuan.simplereader.bean.movie.MovieHumanDetailBean;
+import com.example.liuhaoyuan.simplereader.bean.movie.MovieListBean;
+import com.example.liuhaoyuan.simplereader.bean.music.MusicItemBean;
+import com.example.liuhaoyuan.simplereader.bean.music.MusicListBean;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 
 /**
  * Created by liuhaoyuan on 17/4/23.

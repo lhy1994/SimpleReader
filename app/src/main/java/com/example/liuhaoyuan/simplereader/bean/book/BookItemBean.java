@@ -1,5 +1,7 @@
-package com.example.liuhaoyuan.simplereader.bean;
+package com.example.liuhaoyuan.simplereader.bean.book;
 
+import com.example.liuhaoyuan.simplereader.bean.ImagesBean;
+import com.example.liuhaoyuan.simplereader.bean.RatingBean;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

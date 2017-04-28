@@ -2,10 +2,9 @@ package com.example.liuhaoyuan.simplereader.model;
 
 import com.example.liuhaoyuan.simplereader.api.ApiEngine;
 import com.example.liuhaoyuan.simplereader.api.DouBanApiService;
-import com.example.liuhaoyuan.simplereader.bean.MovieDetailBean;
-import com.example.liuhaoyuan.simplereader.bean.MovieHumanDetailBean;
-import com.example.liuhaoyuan.simplereader.bean.MovieListBean;
-import com.example.liuhaoyuan.simplereader.movie.MovieContract;
+import com.example.liuhaoyuan.simplereader.bean.movie.MovieDetailBean;
+import com.example.liuhaoyuan.simplereader.bean.movie.MovieHumanDetailBean;
+import com.example.liuhaoyuan.simplereader.bean.movie.MovieListBean;
 
 import io.reactivex.Observable;
 

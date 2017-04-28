@@ -1,4 +1,4 @@
-package com.example.liuhaoyuan.simplereader.bean;
+package com.example.liuhaoyuan.simplereader.bean.book;
 
 import com.google.gson.annotations.SerializedName;
 

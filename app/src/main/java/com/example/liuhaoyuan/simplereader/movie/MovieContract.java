@@ -1,16 +1,11 @@
 package com.example.liuhaoyuan.simplereader.movie;
 
-import com.example.liuhaoyuan.simplereader.base.BaseModel;
 import com.example.liuhaoyuan.simplereader.base.BasePresenter;
 import com.example.liuhaoyuan.simplereader.base.BaseView;
-import com.example.liuhaoyuan.simplereader.bean.MovieDetailBean;
-import com.example.liuhaoyuan.simplereader.bean.MovieHumanBean;
-import com.example.liuhaoyuan.simplereader.bean.MovieHumanDetailBean;
-import com.example.liuhaoyuan.simplereader.bean.MovieListBean;
+import com.example.liuhaoyuan.simplereader.bean.movie.MovieHumanBean;
+import com.example.liuhaoyuan.simplereader.bean.movie.MovieHumanDetailBean;
 
 import java.util.List;
-
-import io.reactivex.Observable;
 
 /**
  * Created by liuhaoyuan on 17/4/23.

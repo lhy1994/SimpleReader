@@ -47,4 +47,8 @@ public class ApiEngine {
     public DouBanApiService getDouBanApiService(){
         return mRetrofit.create(DouBanApiService.class);
     }
+
+    public QQApiService getQQApiService(){
+        return mRetrofit.create(QQApiService.class);
+    }
 }

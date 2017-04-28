@@ -13,7 +13,7 @@ import com.example.liuhaoyuan.simplereader.adapter.BaseListAdapter;
 import com.example.liuhaoyuan.simplereader.adapter.music.MusicListAdapter;
 import com.example.liuhaoyuan.simplereader.base.BaseListFragment;
 import com.example.liuhaoyuan.simplereader.bean.BaseListBean;
-import com.example.liuhaoyuan.simplereader.bean.MusicListBean;
+import com.example.liuhaoyuan.simplereader.bean.music.MusicListBean;
 import com.example.liuhaoyuan.simplereader.model.MusicModel;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
